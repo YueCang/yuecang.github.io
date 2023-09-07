@@ -16,29 +16,26 @@
   <meta name="author" content="Leo">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Github建立仓库 登陆个人github账号  创建新的仓库     安装npm12345678$ brew search npm&#x3D;&#x3D;&gt; Formulaenpm ✔   pnpm    nfpm    nim     nvm     tpm     rpm     qpm     gpm     cpm$ brew install npm$ npm -v9.8.0  安装Hexo12345">
+    <meta name="description" content="Git使用规范分支管理策略主分支（master&#x2F;main） 首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。 gitee默认创建master github默认创建main 版本库初始化以后，默认就是在主分支在进行开发    开发分支（develop） 说明  分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做De">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Github+hexo搭建个人博客">
-<meta property="og:url" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:title" content="Git使用规范">
+<meta property="og:url" content="https://yuecang.github.io/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/index.html">
 <meta property="og:site_name" content="Leo&#39;s blog">
-<meta property="og:description" content="Github建立仓库 登陆个人github账号  创建新的仓库     安装npm12345678$ brew search npm&#x3D;&#x3D;&gt; Formulaenpm ✔   pnpm    nfpm    nim     nvm     tpm     rpm     qpm     gpm     cpm$ brew install npm$ npm -v9.8.0  安装Hexo12345">
+<meta property="og:description" content="Git使用规范分支管理策略主分支（master&#x2F;main） 首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。 gitee默认创建master github默认创建main 版本库初始化以后，默认就是在主分支在进行开发    开发分支（develop） 说明  分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做De">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906185656784.png">
-<meta property="og:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906185825727.png">
-<meta property="og:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906191201353.png">
-<meta property="og:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906191506323.png">
-<meta property="og:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906192211178.png">
-<meta property="article:published_time" content="2023-09-06T10:51:58.000Z">
-<meta property="article:modified_time" content="2023-09-06T11:24:11.735Z">
+<meta property="og:image" content="https://yuecang.github.io/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/1.png">
+<meta property="og:image" content="https://yuecang.github.io/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/2.png">
+<meta property="article:published_time" content="2023-09-07T02:04:27.000Z">
+<meta property="article:modified_time" content="2023-09-07T02:05:57.360Z">
 <meta property="article:author" content="Leo">
-<meta property="article:tag" content="github">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://yuecang.github.io/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906185656784.png">
+<meta name="twitter:image" content="https://yuecang.github.io/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/1.png">
   
   
   
-  <title>Github+hexo搭建个人博客 - Leo&#39;s blog</title>
+  <title>Git使用规范 - Leo&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Github+hexo搭建个人博客"></span>
+            <span id="subtitle" data-typed-text="Git使用规范"></span>
           
         </div>
 
@@ -215,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-06 18:51" pubdate>
-          2023年9月6日 晚上
+        <time datetime="2023-09-07 10:04" pubdate>
+          2023年9月7日 上午
         </time>
       </span>
     
@@ -227,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          887 字
         
       </span>
     
@@ -238,7 +235,7 @@
         
         
         
-          11 分钟
+          8 分钟
         
       </span>
     
@@ -275,57 +272,59 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Github+hexo搭建个人博客</h1>
+            <h1 id="seo-header">Git使用规范</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Github建立仓库"><a href="#Github建立仓库" class="headerlink" title="Github建立仓库"></a>Github建立仓库</h2><ol>
-<li><p>登陆个人github账号</p>
-</li>
-<li><p>创建新的仓库</p>
-<img src="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906185656784.png" srcset="/img/loading.gif" lazyload class="" title="image-20230906185656784">
+                <h1 id="Git使用规范"><a href="#Git使用规范" class="headerlink" title="Git使用规范"></a>Git使用规范</h1><h2 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h2><h3 id="主分支（master-main）"><a href="#主分支（master-main）" class="headerlink" title="主分支（master&#x2F;main）"></a>主分支（master&#x2F;main）</h3><blockquote>
+<p>首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。</p>
+<p><strong>gitee默认创建master</strong></p>
+<p><strong>github默认创建main</strong></p>
+<p>版本库初始化以后，默认就是在主分支在进行开发</p>
+</blockquote>
+<img src="/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/1.png" srcset="/img/loading.gif" lazyload class="" title="截屏2023-08-24 11.08.45">
 
-<img src="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906185825727.png" srcset="/img/loading.gif" lazyload class="" title="image-20230906185825727"></li>
+<h3 id="开发分支（develop）"><a href="#开发分支（develop）" class="headerlink" title="开发分支（develop）"></a>开发分支（develop）</h3><ul>
+<li><p>说明</p>
+<blockquote>
+<p>分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做Develop。</p>
+<p>此分支有我们自行创建</p>
+</blockquote>
+</li>
+<li><p>创建命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout -b develop master # 基于主分支创建开发分支，并切换到开发分支<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">相当于：</span><br>git branch develop # 创建develop分支<br> <br>git checkout develop # 切换到develop分支<br></code></pre></td></tr></table></figure></li>
+</ul>
+<img src="/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/2.png" srcset="/img/loading.gif" lazyload class="" title="截屏2023-08-24 11.13.40">
+
+
+
+
+
+<h3 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h3><ol>
+<li><p>拉去最新develop分支代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git pull origin develop<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>进行开发，开发完成后提交develop分支代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add .<br>git cz<br>git push origin develop<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>开发完成后，进行将develop分支代码合并到主分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">git diff develop master # 合并之前，可以查看两分支的不同之处（可选命令）<br><br>git checkout master # 切换到主分支<br>git merge --no-ff develop # 将指定分支合并到当前分支<br><span class="hljs-meta prompt_"># </span><span class="language-bash">--no-ff 参数介绍：</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">	默认情况下，Git执行<span class="hljs-string">&quot;快进式合并&quot;</span>（fast-farward merge），会直接将Master分支指向Develop分支</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">	使用–no-ff参数后，会执行正常合并，在Master分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法</span><br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>合并完成，提交即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git pull -u origin master # 拉去最新主分支代码<br>git push -u origin master # 将提交的代码推送出去<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>合并完成后，可以删除分支（develop日常保留，有临时分支时，完成临时分支开发后，可进行分支删除）（可选步骤）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch -d release # 删除release分支<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">brew search npm</span><br>==&gt; Formulae<br>npm ✔   pnpm    nfpm    nim     nvm     tpm     rpm     qpm     gpm     cpm<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">brew install npm</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm -v</span><br>9.8.0<br></code></pre></td></tr></table></figure>
-
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm install -g hexo-cli</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">hexo -v</span><br>INFO  Validating config<br>hexo: 6.3.0<br>hexo-cli: 4.3.1<br>os: darwin 21.6.0 12.5<br><br>node: 20.5.1<br>acorn: 8.10.0<br>ada: 2.5.1<br>ares: 1.19.1<br>base64: 0.5.0<br>brotli: 1.0.9<br>cjs_module_lexer: 1.2.2<br>cldr: 43.1<br>icu: 73.2<br>llhttp: 8.1.1<br>modules: 115<br>napi: 9<br>nghttp2: 1.55.1<br>openssl: 3.1.2<br>simdutf: 3.2.14<br>tz: 2023c<br>undici: 5.22.1<br>unicode: 15.0<br>uv: 1.46.0<br>uvwasi: 0.0.18<br>v8: 11.3.244.8-node.10<br>zlib: 1.2.11<br></code></pre></td></tr></table></figure>
-
-<h3 id="创建自己的blog目录，并进行初始化"><a href="#创建自己的blog目录，并进行初始化" class="headerlink" title="创建自己的blog目录，并进行初始化"></a>创建自己的blog目录，并进行初始化</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">hexo init my-blog</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> my-blog</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h3><p><a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid主题</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">my-blog/themes，克隆主题库</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/fluid-dev/hexo-theme-fluid.git</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># my-blog/_config.yml，修改相关配置</span><br><span class="hljs-attr">theme:</span> <span class="hljs-string">hexo-theme-fluid</span> <span class="hljs-comment"># 修改主题</span><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span> <span class="hljs-comment"># 修改语言</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>访问：localhost:4000</strong></p>
-<img src="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906191201353.png" srcset="/img/loading.gif" lazyload class="" title="image-20230906191201353">
-
-<h2 id="配置github远程仓库"><a href="#配置github远程仓库" class="headerlink" title="配置github远程仓库"></a>配置github远程仓库</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">&#x27;git&#x27;</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">https://github.com/YueCang/yuecang.github.io.git</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>  <span class="hljs-attr">token:</span> <span class="hljs-string">必填</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="部署到远程仓库"><a href="#部署到远程仓库" class="headerlink" title="部署到远程仓库"></a>部署到远程仓库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">部署之前需要安装部署工具</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm install hexo-deployer-git --save</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">hexo clean &amp; hexo g &amp; hexo d</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>访问：<a href="https://yuecang.github.io/">https://yuecang.github.io/</a></strong></p>
-<img src="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906191506323.png" srcset="/img/loading.gif" lazyload class="" title="image-20230906191506323">
-
-
-
-<h2 id="相关问题解决"><a href="#相关问题解决" class="headerlink" title="相关问题解决"></a>相关问题解决</h2><h3 id="文章图片不显示"><a href="#文章图片不显示" class="headerlink" title="文章图片不显示"></a>文章图片不显示</h3><ol>
-<li><p>安装插件,<strong>注意是img插件</strong>，而不是image插件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">npm install hexo-asset-img --save</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>修改配置文件</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># 修改为true</span><br><span class="hljs-attr">post_asset_folder:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>配置 <strong>Typora</strong>偏好设置，如下图更改，此操作将图片文件保存路径: .&#x2F;${filename} 即保存到与 当前正在编辑的文件名相同的同级文,<strong>这样就不需要每次写文档都要更改图片路径了</strong></p>
-<img src="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/image-20230906192211178.png" srcset="/img/loading.gif" lazyload class="" title="image-20230906192211178">
-</li>
-<li><p>重新部署即可</p>
-</li>
-</ol>
+<h2 id="相关参考文档"><a href="#相关参考文档" class="headerlink" title="相关参考文档"></a>相关参考文档</h2><p>文档参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Junna_zeng/article/details/116779206">Git分支管理策略</a></li>
+</ul>
 
                 
               </div>
@@ -338,9 +337,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/github/" class="print-no-link">#github</a>
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
       
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
       
     </div>
   
@@ -352,8 +351,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Github+hexo搭建个人博客</div>
-      <div>https://yuecang.github.io/2023/09/06/Github-hexo搭建个人博客/</div>
+      <div>Git使用规范</div>
+      <div>https://yuecang.github.io/2023/09/07/Git使用规范/</div>
     </div>
     <div class="license-meta">
       
@@ -365,7 +364,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月6日</div>
+          <div>2023年9月7日</div>
         </div>
       
       
@@ -397,15 +396,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/07/Git-Commit%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/" title="Git Commit提交规范">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Git Commit提交规范</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/09/07/Git-Commit%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/" title="Git Commit提交规范">
+                        <span class="hidden-mobile">Git Commit提交规范</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

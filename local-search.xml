@@ -4,6 +4,48 @@
   
   
   <entry>
+    <title>Git使用规范</title>
+    <link href="/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
+    <url>/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Git使用规范"><a href="#Git使用规范" class="headerlink" title="Git使用规范"></a>Git使用规范</h1><h2 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h2><h3 id="主分支（master-main）"><a href="#主分支（master-main）" class="headerlink" title="主分支（master&#x2F;main）"></a>主分支（master&#x2F;main）</h3><blockquote><p>首先，代码库应该有一个、且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。</p><p><strong>gitee默认创建master</strong></p><p><strong>github默认创建main</strong></p><p>版本库初始化以后，默认就是在主分支在进行开发</p></blockquote><img src="/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/1.png" class="" title="截屏2023-08-24 11.08.45"><h3 id="开发分支（develop）"><a href="#开发分支（develop）" class="headerlink" title="开发分支（develop）"></a>开发分支（develop）</h3><ul><li><p>说明</p><blockquote><p>分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做Develop。</p><p>此分支有我们自行创建</p></blockquote></li><li><p>创建命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout -b develop master # 基于主分支创建开发分支，并切换到开发分支<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">相当于：</span><br>git branch develop # 创建develop分支<br> <br>git checkout develop # 切换到develop分支<br></code></pre></td></tr></table></figure></li></ul><img src="/2023/09/07/Git%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/2.png" class="" title="截屏2023-08-24 11.13.40"><h3 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h3><ol><li><p>拉去最新develop分支代码</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git pull origin develop<br></code></pre></td></tr></table></figure></li><li><p>进行开发，开发完成后提交develop分支代码</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add .<br>git cz<br>git push origin develop<br></code></pre></td></tr></table></figure></li><li><p>开发完成后，进行将develop分支代码合并到主分支</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">git diff develop master # 合并之前，可以查看两分支的不同之处（可选命令）<br><br>git checkout master # 切换到主分支<br>git merge --no-ff develop # 将指定分支合并到当前分支<br><span class="hljs-meta prompt_"># </span><span class="language-bash">--no-ff 参数介绍：</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">默认情况下，Git执行<span class="hljs-string">&quot;快进式合并&quot;</span>（fast-farward merge），会直接将Master分支指向Develop分支</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用–no-ff参数后，会执行正常合并，在Master分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法</span><br></code></pre></td></tr></table></figure></li><li><p>合并完成，提交即可</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git pull -u origin master # 拉去最新主分支代码<br>git push -u origin master # 将提交的代码推送出去<br></code></pre></td></tr></table></figure></li><li><p>合并完成后，可以删除分支（develop日常保留，有临时分支时，完成临时分支开发后，可进行分支删除）（可选步骤）</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch -d release # 删除release分支<br></code></pre></td></tr></table></figure></li></ol><h2 id="相关参考文档"><a href="#相关参考文档" class="headerlink" title="相关参考文档"></a>相关参考文档</h2><p>文档参考：</p><ul><li><a href="https://blog.csdn.net/Junna_zeng/article/details/116779206">Git分支管理策略</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+      <tag>Git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Git Commit提交规范</title>
+    <link href="/2023/09/07/Git-Commit%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/"/>
+    <url>/2023/09/07/Git-Commit%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Git-Commit提交规范"><a href="#Git-Commit提交规范" class="headerlink" title="Git Commit提交规范"></a>Git Commit提交规范</h2><ol><li><p>进行全局安装cz</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install -g commitizen  # 系统将弹出上述type、scope等来填写<br>npm install -g cz-conventional-changelog # 用来规范提交信息<br></code></pre></td></tr></table></figure></li><li><p>安装完成后,项目文件夹内进行初始化</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm init # 初始化npm<br>commitizen init cz-conventional-changelog --save --force --save-exact # 在项目内添加对应以来,以及初始化<br></code></pre></td></tr></table></figure></li><li><p>安装完成后使用git cz命令提交即可</p><img src="/2023/09/07/Git-Commit%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/image-20230626150341169-4052049.png" class="" title="image-20230626150341169"><ul><li>type: <code>必填</code> commit 类型，有业内常用的字段，也可以根据需要自己定义<ul><li>feat 增加新功能</li><li>fix 修复问题&#x2F;BUG</li><li>style 代码风格相关无影响运行结果的</li><li>perf 优化&#x2F;性能提升</li><li>refactor 重构</li><li>revert 撤销修改</li><li>test 测试相关</li><li>docs 文档&#x2F;注释</li><li>chore 依赖更新&#x2F;脚手架配置修改等</li><li>workflow 工作流改进</li><li>ci 持续集成</li><li>types 类型定义文件更改</li><li>wip 开发中</li><li>undef 不确定的分类</li></ul></li><li>scope: commit 影响的范围, 比如某某组件、某某页面</li><li>subject: <code>必填</code> 简短的概述提交的代码，建议符合 50&#x2F;72 formatting</li><li>body: commit 具体修改内容, 可以分为多行, 建议符合 50&#x2F;72 formatting</li><li>footer: 其他备注, 包括 breaking changes 和 issues 两部分</li></ul></li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+      <tag>Git</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Github+hexo搭建个人博客</title>
     <link href="/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     <url>/2023/09/06/Github-hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
