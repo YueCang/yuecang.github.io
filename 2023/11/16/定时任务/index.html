@@ -16,23 +16,26 @@
   <meta name="author" content="Leo">
   <meta name="keywords" content="">
   
-    <meta name="description" content="官方文档 Springboot框架集成Knife4j Maven依赖引入 Note:注意引入版本与springboot版本关系 12345678910&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;ar">
+    <meta name="description" content="Springboot集成定时任务静态定时任务 静态定时任务是指应用跑起来后，任务的执行时间无法进行动态修改。  单线程定时任务 使用注解开启定时任务 @EnableScheduling 12345678@SpringBootApplication@EnableSchedulingpublic class SpringbootQuartzApplication &amp;#123;    public st">
 <meta property="og:type" content="article">
-<meta property="og:title" content="knife4j教程">
-<meta property="og:url" content="https://yuecang.github.io/2023/11/15/knife4j%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:title" content="定时任务">
+<meta property="og:url" content="https://yuecang.github.io/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Leo&#39;s blog">
-<meta property="og:description" content="官方文档 Springboot框架集成Knife4j Maven依赖引入 Note:注意引入版本与springboot版本关系 12345678910&lt;dependency&gt;  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;  &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;ar">
+<meta property="og:description" content="Springboot集成定时任务静态定时任务 静态定时任务是指应用跑起来后，任务的执行时间无法进行动态修改。  单线程定时任务 使用注解开启定时任务 @EnableScheduling 12345678@SpringBootApplication@EnableSchedulingpublic class SpringbootQuartzApplication &amp;#123;    public st">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-15T01:44:05.000Z">
-<meta property="article:modified_time" content="2023-11-15T01:56:05.783Z">
+<meta property="og:image" content="https://yuecang.github.io/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/image-20231116104653766.png">
+<meta property="article:published_time" content="2023-11-16T02:04:04.000Z">
+<meta property="article:modified_time" content="2023-11-16T02:49:59.615Z">
 <meta property="article:author" content="Leo">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="Knife4j">
+<meta property="article:tag" content="Quartz">
+<meta property="article:tag" content="定时任务">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuecang.github.io/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/image-20231116104653766.png">
   
   
   
-  <title>knife4j教程 - Leo&#39;s blog</title>
+  <title>定时任务 - Leo&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="knife4j教程"></span>
+            <span id="subtitle" data-typed-text="定时任务"></span>
           
         </div>
 
@@ -209,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-15 09:44" pubdate>
-          2023年11月15日 上午
+        <time datetime="2023-11-16 10:04" pubdate>
+          2023年11月16日 上午
         </time>
       </span>
     
@@ -221,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.9k 字
         
       </span>
     
@@ -232,7 +235,7 @@
         
         
         
-          14 分钟
+          17 分钟
         
       </span>
     
@@ -269,27 +272,44 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">knife4j教程</h1>
+            <h1 id="seo-header">定时任务</h1>
             
             
               <div class="markdown-body">
                 
-                <p><a target="_blank" rel="noopener" href="https://doc.xiaominfo.com/docs/action/springboot">官方文档</a></p>
-<h2 id="Springboot框架集成Knife4j"><a href="#Springboot框架集成Knife4j" class="headerlink" title="Springboot框架集成Knife4j"></a>Springboot框架集成Knife4j</h2><ol>
-<li><p>Maven依赖引入</p>
-<p><code>Note:</code>注意引入版本与springboot版本关系</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.xiaoymin<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>knife4j-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+                <h1 id="Springboot集成定时任务"><a href="#Springboot集成定时任务" class="headerlink" title="Springboot集成定时任务"></a>Springboot集成定时任务</h1><h2 id="静态定时任务"><a href="#静态定时任务" class="headerlink" title="静态定时任务"></a>静态定时任务</h2><blockquote>
+<p>静态定时任务是指应用跑起来后，任务的执行时间无法进行动态修改。</p>
+</blockquote>
+<h3 id="单线程定时任务"><a href="#单线程定时任务" class="headerlink" title="单线程定时任务"></a>单线程定时任务</h3><ol>
+<li><p>使用注解开启定时任务 <strong>@EnableScheduling</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableScheduling</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringbootQuartzApplication</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(SpringbootQuartzApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>创建Swagger配置依赖</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableSwagger2WebMvc</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Knife4jConfiguration</span> &#123;<br><br>    <span class="hljs-meta">@Bean(value = &quot;defaultApi2&quot;)</span><br>    <span class="hljs-keyword">public</span> Docket <span class="hljs-title function_">defaultApi2</span><span class="hljs-params">()</span> &#123;<br>        Docket docket=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Docket</span>(DocumentationType.SWAGGER_2)<br>                .apiInfo(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ApiInfoBuilder</span>()<br>                        <span class="hljs-comment">//.title(&quot;swagger-bootstrap-ui-demo RESTful APIs&quot;)</span><br>                        .description(<span class="hljs-string">&quot;# swagger-bootstrap-ui-demo RESTful APIs&quot;</span>)<br>                        .termsOfServiceUrl(<span class="hljs-string">&quot;http://www.xx.com/&quot;</span>)<br>                        .contact(<span class="hljs-string">&quot;xx@qq.com&quot;</span>)<br>                        .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br>                        .build())<br>                <span class="hljs-comment">//分组名称</span><br>                .groupName(<span class="hljs-string">&quot;2.X版本&quot;</span>)<br>                .select()<br>                <span class="hljs-comment">//这里指定Controller扫描包路径</span><br>                .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.github.xiaoymin.knife4j.controller&quot;</span>))<br>                .paths(PathSelectors.any())<br>                .build();<br>        <span class="hljs-keyword">return</span> docket;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<li><p>创建任务 <strong>@Scheduled</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DownLoadTask</span> &#123;<br><br>    <span class="hljs-meta">@Scheduled(cron = &quot;0/10 * * * * ?&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">justDoIt</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;开始下载银行对账文件&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行对账文件下载完成，进行解密操作&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行对账文件下载解密完成&quot;</span>);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>代码示例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Api(tags = &quot;首页模块&quot;)</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IndexController</span> &#123;<br><br>    <span class="hljs-meta">@ApiImplicitParam(name = &quot;name&quot;,value = &quot;姓名&quot;,required = true)</span><br>    <span class="hljs-meta">@ApiOperation(value = &quot;向客人问好&quot;)</span><br>    <span class="hljs-meta">@GetMapping(&quot;/sayHi&quot;)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;String&gt; <span class="hljs-title function_">sayHi</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(value = &quot;name&quot;)</span>String name)</span>&#123;<br>        <span class="hljs-keyword">return</span> ResponseEntity.ok(<span class="hljs-string">&quot;Hi:&quot;</span>+name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>启动Spring Boot工程，在浏览器中访问：<code>http://localhost:8080/doc.html</code></p>
+<li><p>可按照需求进行任务执行时间</p>
+<ol>
+<li>cron：使用Cron表达式执行定时任务</li>
+<li>fixedDelay：固定延迟执行，例如距离上次成功执行后5秒执行</li>
+<li>fixedRate：固定速率执行，例如每隔5秒执行一次</li>
+<li>initialDelay：初始延迟任务，例如任务开启5秒后执行，之后再以固定频率或者间隔执行</li>
+</ol>
 </li>
 </ol>
-<h2 id="待补充相关注解使用"><a href="#待补充相关注解使用" class="headerlink" title="待补充相关注解使用"></a>待补充相关注解使用</h2>
+<p><code>Note：此方式只有一个调度线程执行任务，在多任务时，效果就会差很多</code></p>
+<h3 id="多线程定时任务"><a href="#多线程定时任务" class="headerlink" title="多线程定时任务"></a>多线程定时任务</h3><ol>
+<li><p>定义线程池</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SchedulerConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean(name = &quot;bankThreadPool&quot;)</span><br>    <span class="hljs-keyword">public</span> Executor <span class="hljs-title function_">bankExecutor</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">ThreadPoolTaskExecutor</span> <span class="hljs-variable">executor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolTaskExecutor</span>();<br>        <span class="hljs-comment">// 设置核心线程数为 3</span><br>        executor.setCorePoolSize(<span class="hljs-number">3</span>);<br>        <span class="hljs-comment">// 最大线程数为10</span><br>        executor.setMaxPoolSize(<span class="hljs-number">10</span>);<br>        <span class="hljs-comment">// 任务队列的大小</span><br>        executor.setQueueCapacity(<span class="hljs-number">3</span>);<br>        <span class="hljs-comment">// 线程前缀名</span><br>        executor.setThreadNamePrefix(<span class="hljs-string">&quot;bankExecutor-&quot;</span>);<br>        <span class="hljs-comment">// 线程存活时间</span><br>        executor.setKeepAliveSeconds(<span class="hljs-number">30</span>);<br>        <span class="hljs-comment">// 初始化</span><br>        executor.initialize();<br>        <span class="hljs-keyword">return</span> executor;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建任务 <strong>@EnableAsync @Async</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@EnableAsync</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DownLoadTask</span> &#123;<br><br>    <span class="hljs-meta">@Async(&quot;bankThreadPool&quot;)</span><br>    <span class="hljs-meta">@Scheduled(cron = &quot;0/1 * * * * ?&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">justDoIt</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;开始下载银行 A 的对账文件&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行 A 对账文件下载完成，进行解密操作&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行 A 对账文件下载解密完成&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Async(&quot;bankThreadPool&quot;)</span><br>    <span class="hljs-meta">@Scheduled(cron = &quot;0/1 * * * * ?&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">justDoIt2</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;开始下载银行 B 的对账文件&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行 B 对账文件下载完成，进行解密操作&quot;</span>);<br>        log.info(<span class="hljs-string">&quot;银行 B 对账文件下载解密完成&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/image-20231116104653766.png" srcset="/img/loading.gif" lazyload class="" title="image-20231116104653766"></li>
+</ol>
+<h2 id="动态定时任务"><a href="#动态定时任务" class="headerlink" title="动态定时任务"></a>动态定时任务</h2><h2 id="集成Quarttz定时任务"><a href="#集成Quarttz定时任务" class="headerlink" title="集成Quarttz定时任务"></a>集成Quarttz定时任务</h2><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1947189">https://cloud.tencent.com/developer/article/1947189</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1947191">https://cloud.tencent.com/developer/article/1947191</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1947192">https://cloud.tencent.com/developer/article/1947192</a></p>
+
                 
               </div>
             
@@ -303,7 +323,9 @@
       
         <a href="/tags/Java/" class="print-no-link">#Java</a>
       
-        <a href="/tags/Knife4j/" class="print-no-link">#Knife4j</a>
+        <a href="/tags/Quartz/" class="print-no-link">#Quartz</a>
+      
+        <a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" class="print-no-link">#定时任务</a>
       
     </div>
   
@@ -315,8 +337,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>knife4j教程</div>
-      <div>https://yuecang.github.io/2023/11/15/knife4j教程/</div>
+      <div>定时任务</div>
+      <div>https://yuecang.github.io/2023/11/16/定时任务/</div>
     </div>
     <div class="license-meta">
       
@@ -328,7 +350,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月15日</div>
+          <div>2023年11月16日</div>
         </div>
       
       
@@ -360,18 +382,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" title="定时任务">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">定时任务</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/21/Slf4j%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Slf4j使用教程">
-                        <span class="hidden-mobile">Slf4j使用教程</span>
+                      <a href="/2023/11/15/knife4j%E6%95%99%E7%A8%8B/" title="knife4j教程">
+                        <span class="hidden-mobile">knife4j教程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
