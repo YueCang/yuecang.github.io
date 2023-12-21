@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Leo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CDH安装 修改主机名称和host文件映射 123456789# 修改主机名称，需全部进行修改[root@hadoop0X ~]# hostnamectl set-hostname hadoop0X# host文件映射127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CDH">
+<meta property="og:url" content="https://yuecang.github.io/2023/12/21/CDH/index.html">
+<meta property="og:site_name" content="Leo&#39;s blog">
+<meta property="og:description" content="CDH安装 修改主机名称和host文件映射 123456789# 修改主机名称，需全部进行修改[root@hadoop0X ~]# hostnamectl set-hostname hadoop0X# host文件映射127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4::1         l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/21/CDH/1643100472883.png">
+<meta property="article:published_time" content="2023-12-21T03:23:41.000Z">
+<meta property="article:modified_time" content="2023-12-21T03:26:14.707Z">
+<meta property="article:author" content="Leo">
+<meta property="article:tag" content="BigData">
+<meta property="article:tag" content="CDH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuecang.github.io/2023/12/21/CDH/1643100472883.png">
+  
+  
+  
+  <title>CDH - Leo&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuecang.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Leo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CDH"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-21 11:23" pubdate>
+          2023年12月21日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CDH</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="CDH安装"><a href="#CDH安装" class="headerlink" title="CDH安装"></a>CDH安装</h1><ol>
+<li><p>修改主机名称和host文件映射</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">修改主机名称，需全部进行修改</span><br>[root@hadoop0X ~]# hostnamectl set-hostname hadoop0X<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">host文件映射</span><br>127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4<br>::1         localhost localhost.localdomain localhost6 localhost6.localdomain6<br>192.168.24.10 hadoop01 hadoop01<br>192.168.24.11 hadoop02 hadoop02<br>192.168.24.12 hadoop03 hadoop03<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>关闭防火墙和Selinux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">关闭防火墙</span><br>systemctl stop firewalld<br>systemctl disable firewalld.service<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">关闭Selinux</span><br>vim /etc/selinux/config<br><span class="hljs-meta prompt_"># </span><span class="language-bash">This file controls the state of SELinux on the system.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">SELINUX= can take one of these three values:</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    enforcing - SELinux security policy is enforced.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    permissive - SELinux prints warnings instead of enforcing.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    disabled - No SELinux policy is loaded.</span><br>SELINUX=disabled<br><span class="hljs-meta prompt_"># </span><span class="language-bash">SELINUXTYPE= can take one of three values:</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    targeted - Targeted processes are protected,</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    minimum - Modification of targeted policy. Only selected processes are protected.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">    mls - Multi Level Security protection.</span><br>SELINUXTYPE=targeted<br><br>setenforce 0    # 临时关闭selinux<br>getenforce      # 查看selinux状态<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>SSH免密</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">ssh免密</span><br>ssh-keygen -t rsa<br><br>ssh-copy-id hadoop01<br>ssh-copy-id hadoop02<br>ssh-copy-id hadoop03<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>安装JDK</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">将jdk解压到 /usr/java 下</span><br>tar -zxvf jdk-8u171-linux-x64.tar.gz -C /usr/java<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">在/etc/profile文件中，配置环境变量</span><br>vim /etc/profile<br><br>export JAVA_HOME=/usr/java/jdk1.8.0_171<br>export JRE_HOME=/usr/java/jdk1.8.0_171/jre<br>export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH<br>export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:/opt/user-bin:$PATH<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将文件分发给其他两台机器</span><br>scp -r /usr/java/ hadoop02:/usr<br>scp -r /usr/java/ hadoop03:/usr<br><br>scp /etc/profile hadoop02:/etc<br>scp /etc/profile hadoop03:/etc<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使环境变量生效</span><br>[root@hadoop02 ~]# source /etc/profile<br>[root@hadoop03 ~]# source /etc/profile<br></code></pre></td></tr></table></figure>
+
+<p><strong><code>Notes：</code>JDK安装路径一定要安装在 <code>/usr/java</code> 路径下，否则无法识别到JDK</strong></p>
+</li>
+<li><p>安装Mysql（两种方式任选其一）                                                   </p>
+<ul>
+<li><p>本地源安装mysql</p>
+<ul>
+<li><p>安装和启动httpd</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装httpd</span><br>yum install -y httpd<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动httpd</span><br>systemctl start httpd<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置开机启动</span><br>systemctl enable httpd<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装createrepo </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"> # </span><span class="language-bash">安装 createrepo</span><br>yum install -y createrepo<br> <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建本地源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell">createrepo /var/www/html/mysql_repos<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建文件 *.repo 一定要以repo为文件后缀名</span><br>touch /etc/yum.repos.d/mysql-local.repo<br>vim /etc/yum.repos.d/mysql-local.repo<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">the RPMs of MySQL server</span><br>[mysql-local]<br>name=mysql-local<br>baseurl=http://hadoop01/mysql-repos<br>gpgcheck=0<br>enabled=1<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">清空本地的yum源缓存</span><br>yum clean all<br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新生成元数据</span><br>yum makecache<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用yum查看本地源文件</span><br>yum list | grep mysql-local<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装Mysql（本地源形式）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装mysql</span><br>yum install -y mysql-community-server<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">初始化mysql</span><br>mysqld --initialize --user=mysql --console<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动mysql</span><br>systemctl start mysqld<br><span class="hljs-meta prompt_"># </span><span class="language-bash">开机自启</span><br>systemctl enable mysqld<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改字符集</span> <br>vim /etc/my.cnf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">For advice on how to change settings please see</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">&gt;&gt;&gt; 追加内容开始</span><br>[client]<br>port=3306<br>default-character-set=utf8<br>[mysql]<br>default-character-set=utf8<br><span class="hljs-meta prompt_"># </span><span class="language-bash">&lt;&lt;&lt; 追加内容结束</span><br>[mysqld]<br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash"><span class="hljs-comment"># Remove leading # and set to the amount of RAM for the most important data cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">innodb_buffer_pool_size = 128M</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash"><span class="hljs-comment"># Remove leading # to turn on a very important data integrity option: logging</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">changes to the binary <span class="hljs-built_in">log</span> between backups.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">log_bin</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Remove leading <span class="hljs-comment"># to set options mainly useful for reporting servers.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The server defaults are faster <span class="hljs-keyword">for</span> transactions and fast SELECTs.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Adjust sizes as needed, experiment to find the optimal values.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">join_buffer_size = 128M</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">sort_buffer_size = 2M</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">read_rnd_buffer_size = 2M</span><br>datadir=/var/lib/mysql<br>socket=/var/lib/mysql/mysql.sock<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Disabling symbolic-links is recommended to prevent assorted security risks</span><br>symbolic-links=0<br><br>log-error=/var/log/mysqld.log<br>pid-file=/var/run/mysqld/mysqld.pid<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">&gt;&gt;&gt; 追加内容开始</span><br>collation-server=utf8_general_ci<br>character_set_server=utf8<br><span class="hljs-meta prompt_"># </span><span class="language-bash">&lt;&lt;&lt; 追加内容结束</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新启动mysql</span><br>systemctl restart mysqld<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看原始密码</span><br>cat /var/log/mysqld.log | grep password<br>2020-12-18T09:11:35.497638Z 1 [Note] A temporary password is generated for root@localhost: 97iE:I.&gt;T6ea<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">登录mysql</span><br>mysql -uroot -p97iE:I.&gt;T6ea<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改密码</span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">alter user <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> identified by <span class="hljs-string">&#x27;Mysql@12#$&#x27;</span>;</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看字符集，字符集需要都是utf8，否则插入中文会出现乱码</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">show variables like <span class="hljs-string">&#x27;character%&#x27;</span>;</span><br>+--------------------------+----------------------------+<br>| Variable_name            | Value                      |<br>+--------------------------+----------------------------+<br>| character_set_client     | utf8                       |<br>| character_set_connection | utf8                       |<br>| character_set_database   | utf8                       |<br>| character_set_filesystem | binary                     |<br>| character_set_results    | utf8                       |<br>| character_set_server     | utf8                       |<br>| character_set_system     | utf8                       |<br>| character_sets_dir       | /usr/share/mysql/charsets/ |<br>+--------------------------+----------------------------+<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 开启远程连接</span><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-keyword">User</span>,Host,authentication_string <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span>;<br><span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------+-------------------------------------------+</span><br><span class="hljs-operator">|</span> <span class="hljs-keyword">User</span>          <span class="hljs-operator">|</span> Host      <span class="hljs-operator">|</span> authentication_string                     <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------+-------------------------------------------+</span><br><span class="hljs-operator">|</span> root          <span class="hljs-operator">|</span> localhost <span class="hljs-operator">|</span> <span class="hljs-operator">*</span><span class="hljs-number">6</span>BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span> mysql.session <span class="hljs-operator">|</span> localhost <span class="hljs-operator">|</span> <span class="hljs-operator">*</span>THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span> mysql.sys     <span class="hljs-operator">|</span> localhost <span class="hljs-operator">|</span> <span class="hljs-operator">*</span>THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------------+-----------+-------------------------------------------+</span><br><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">update</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">set</span> host<span class="hljs-operator">=</span><span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-keyword">where</span> host <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;localhost&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">user</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;root&#x27;</span>;<br><br>mysql<span class="hljs-operator">&gt;</span> flush privileges;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>阿里云centos7安装mysql8.0 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载安装mysql</span><br>sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm<br>sudo yum -y install mysql-community-server --enablerepo=mysql80-community --nogpgcheck<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动mysql，查看初是密码</span><br>systemctl start mysqld<br>cat /var/log/mysqld.log | grep password<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改mysql默认密码</span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">ALTER USER <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="hljs-string">&#x27;Cdh@123456&#x27;</span>;</span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">flush privileges;</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">开启远程连接</span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">update user <span class="hljs-built_in">set</span> host=<span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-built_in">where</span> user=<span class="hljs-string">&#x27;root&#x27;</span>;</span><br><span class="hljs-meta prompt_">mysql&gt; </span><span class="language-bash">flush privileges;</span> <br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>安装CM服务</p>
+<ul>
+<li><p>Mysql中创建元数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> DATABASE scm <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span>  utf8_general_ci;<br><br><span class="hljs-keyword">CREATE</span> DATABASE hive <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span>  utf8_general_ci;<br><br><span class="hljs-keyword">CREATE</span> DATABASE oozie <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span>  utf8_general_ci;<br><br><span class="hljs-keyword">CREATE</span> DATABASE hue <span class="hljs-keyword">DEFAULT</span> <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">COLLATE</span>  utf8_general_ci;<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;scm&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;Scm@1234&#x27;</span>;<br><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> <span class="hljs-operator">*</span>.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;scm&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">GRANT</span> OPTION;<br>flush privileges;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建存放mysql驱动的文件目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir /usr/share/java<br><br>cp mysql-connector-java.jar /usr/share/java/<br><br>scp -r /usr/share/java/ hadoop02:/usr/share/<br>scp -r /usr/share/java/ hadoop03:/usr/share/<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建CM本地源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建本地源</span><br>createrepo /var/www/html/cloudera-repos/cm6/6.2.1/redhat7<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置本地源，创建文件 *.repo 一定要以repo为文件后缀名</span><br>touch /etc/yum.repos.d/cloudera-local.repo<br>vim /etc/yum.repos.d/cloudera-local.repo<br><br>[cloudera-local]<br>name=cloudera-local<br>baseurl=http://hadoop102/CDH6.3.2/cm6.3.1/RPMS/x86_64<br>gpgcheck=0<br>enabled=1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">同步repo文件</span><br>scp cloudera-local.repo hadoop02:/etc/yum.repos.d/<br>scp cloudera-local.repo hadoop03:/etc/yum.repos.d/<br><br>[root@hadoop0X ~]# yum clean all &amp;&amp; yum makecache<br>[root@hadoop0X ~]# yum list | grep cloudera<br>cloudera-manager-agent.x86_64               6.2.1-1426065.el7          cloudera-local<br>cloudera-manager-daemons.x86_64             6.2.1-1426065.el7          cloudera-local<br>cloudera-manager-server.x86_64              6.2.1-1426065.el7          cloudera-local<br>cloudera-manager-server-db-2.x86_64         6.2.1-1426065.el7          cloudera-local<br>enterprise-debuginfo.x86_64                 6.2.1-1426065.el7          cloudera-local<br>oracle-j2sdk1.8.x86_64                      1.8.0+update181-1          cloudera-local<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装server，agent，daemons</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">所有节点都要安装daemons agent，只需要在服务节点安装server</span><br>[root@hadoop01 ~]# yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改agent配置文件</span><br>vim /etc/cloudera-scm-agent/config.ini<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Hostname of the CM server.</span><br>server_host=hadoop01<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">分发agent配置文件</span><br>scp config.ini hadoop02:/etc/cloudera-scm-agent/<br>scp config.ini hadoop03:/etc/cloudera-scm-agent/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将离线文件放到/opt/cloudera/parcel-repo,此文件夹存放离线安装文件</span><br>cp CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha1 CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha256 manifest.json /opt/cloudera/parcel-repo/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">比较sha1和sha256校验码，一致的将文件名称改为*.sha</span><br>sha1sum CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel<br>d2a3d0be2524f37dbf686677cc45f3f8a3bd2cfd  CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel<br><br>cat CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha1<br>d2a3d0be2524f37dbf686677cc45f3f8a3bd2cfd<br><br>cat CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha256<br>8b6e51b900832a39c22fa6a778f8188836c25c99de3280c3ff81f17472deff72<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除不相同的，将相同的*.sha1改名为*.sha</span><br>mv CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha1 CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha<br>rm -rf CDH-6.2.1-1.cdh6.2.1.p0.1425774-el7.parcel.sha256<br>   <br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置server连接的数据库</span><br>vim /etc/cloudera-scm-server/db.properties<br>com.cloudera.cmf.db.type=mysql<br>com.cloudera.cmf.db.host=hadoop01<br>com.cloudera.cmf.db.name=scm<br>com.cloudera.cmf.db.user=root<br>com.cloudera.cmf.db.password=Cdh@123456<br>com.cloudera.cmf.db.setupType=EXTERNAL<br>   <br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行初始化数据库脚本</span><br>/opt/cloudera/cm/schema/scm_prepare_database.sh mysql scm root Cdh@123456<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>启动server和agent</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看启动日志</span><br>[root@hadoop01 ~]# tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log<br>   <br>[root@hadoop01 ~]# systemctl start cloudera-scm-server<br>   <br>[root@hadoop0X ~]# systemctl start cloudera-scm-agent<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动成功后访问：hadoop102:7180</p>
+<p>用户名：admin</p>
+<p>密码：admin</p>
+<p>ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY ‘Cdh@123456’;</p>
+</blockquote>
+<img src="/2023/12/21/CDH/1643100472883.png" srcset="/img/loading.gif" lazyload class="" title="CM登录页面"></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/BigData/" class="print-no-link">#BigData</a>
+      
+        <a href="/tags/CDH/" class="print-no-link">#CDH</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CDH</div>
+      <div>https://yuecang.github.io/2023/12/21/CDH/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Leo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/16/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/" title="定时任务">
+                        <span class="hidden-mobile">定时任务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
