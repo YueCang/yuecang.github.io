@@ -1,0 +1,1396 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Leo">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ClickHouse初级官方存在中文文档( https:&#x2F;&#x2F;clickhouse.tech&#x2F;docs&#x2F;zh&#x2F; ) 介绍 ClickHouse是一个用于联机分析(OLAP)的列式数据库管理系统(DBMS)   常见的行式数据库系统  MySQL、Postgres和MS SQL Server 常见的列式数据库有： Vertica、 Paraccel (Actian Matrix，Amazon Reds">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clickhouse">
+<meta property="og:url" content="https://yuecang.github.io/2023/12/22/Clickhouse/index.html">
+<meta property="og:site_name" content="Leo&#39;s blog">
+<meta property="og:description" content="ClickHouse初级官方存在中文文档( https:&#x2F;&#x2F;clickhouse.tech&#x2F;docs&#x2F;zh&#x2F; ) 介绍 ClickHouse是一个用于联机分析(OLAP)的列式数据库管理系统(DBMS)   常见的行式数据库系统  MySQL、Postgres和MS SQL Server 常见的列式数据库有： Vertica、 Paraccel (Actian Matrix，Amazon Reds">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1647501880366.png">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1648779049635.png">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1648779096352.png">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1648799917430.png">
+<meta property="og:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1648800591071.png">
+<meta property="article:published_time" content="2023-12-22T06:39:39.000Z">
+<meta property="article:modified_time" content="2023-12-22T06:40:30.165Z">
+<meta property="article:author" content="Leo">
+<meta property="article:tag" content="BigData">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Clickhouse">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuecang.github.io/2023/12/22/Clickhouse/1647501880366.png">
+  
+  
+  
+  <title>Clickhouse - Leo&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yuecang.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Leo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Clickhouse"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-22 14:39" pubdate>
+          2023年12月22日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          34k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          287 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Clickhouse</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ClickHouse初级"><a href="#ClickHouse初级" class="headerlink" title="ClickHouse初级"></a>ClickHouse初级</h1><p><code>官方存在中文文档</code>( <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/zh/">https://clickhouse.tech/docs/zh/</a> )</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p> ClickHouse是一个用于联机分析(OLAP)的<code>列式数据库管理系统</code>(DBMS) </p>
+<ul>
+<li>常见的行式数据库系统  <code>MySQL</code>、<code>Postgres</code>和<code>MS SQL Server</code></li>
+<li>常见的列式数据库有： Vertica、 Paraccel (Actian Matrix，Amazon Redshift)、 Sybase IQ、 Exasol、 Infobright、 InfiniDB、 MonetDB (VectorWise， Actian Vector)、 LucidDB、 SAP HANA、 Google Dremel、 Google PowerDrill、 Druid、 kdb+</li>
+</ul>
+<h3 id="OLAP场景的关键特征"><a href="#OLAP场景的关键特征" class="headerlink" title="OLAP场景的关键特征 "></a>OLAP场景的关键特征<a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/zh/#olapchang-jing-de-guan-jian-te-zheng"> </a></h3><ul>
+<li>绝大多数是读请求</li>
+<li>数据以相当大的批次(&gt; 1000行)更新，而不是单行更新;或者根本没有更新</li>
+<li>已添加到数据库的数据不能修改</li>
+<li>对于读取，从数据库中提取相当多的行，但只提取列的一小部分</li>
+<li>宽表，即每个表包含着大量的列</li>
+<li>查询相对较少(通常每台服务器每秒查询数百次或更少)</li>
+<li>对于简单查询，允许延迟大约50毫秒</li>
+<li>列中的数据相对较小：数字和短字符串(例如，每个URL 60个字节)</li>
+<li>处理单个查询时需要高吞吐量(每台服务器每秒可达数十亿行)</li>
+<li>事务不是必须的</li>
+<li>对数据一致性要求低</li>
+<li>每个查询有一个大表。除了他以外，其他的都很小</li>
+<li>查询结果明显小于源数据。换句话说，数据经过过滤或聚合，因此结果适合于单个服务器的RAM中</li>
+</ul>
+<h2 id="ClickHouse安装"><a href="#ClickHouse安装" class="headerlink" title="ClickHouse安装"></a>ClickHouse安装</h2><h3 id="单机安装"><a href="#单机安装" class="headerlink" title="单机安装"></a>单机安装</h3><ul>
+<li><p>着重注意的几个节点版本</p>
+<ul>
+<li><blockquote>
+<p>20.5版本 —&gt; final</p>
+<p>20.6.3版本 —&gt; explain	可以查看sql执行计划，再次之前只能通过日志查看</p>
+<p>20.8版本 —&gt; 添加了库引擎	支持实时同步mysql（Canal、Maxwell均支持）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>关闭防火墙</p>
+<ul>
+<li><pre><code class="shell"># 查看防火墙状态
+systemctl status firewalld
+
+# 关闭防火墙
+systemctl stop firewalld
+
+# 禁止开机自启
+systemctl disable firewalld
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stata"><br>- CentOS取消打开文件限制<br><br>  - ~~~<span class="hljs-keyword">shell</span><br>    # 编辑文件根据服务器情况添加以下内容<br>    vim /etc/security/limits.<span class="hljs-keyword">conf</span><br><span class="hljs-comment">    * soft nofile 65536</span><br><span class="hljs-comment">    * hard nofile 65536</span><br><span class="hljs-comment">    * soft nproc 131072</span><br><span class="hljs-comment">    * hard nproc 131072</span><br>    <br>    # limits.<span class="hljs-keyword">d</span>文件夹的配置会覆盖上面那个文件的配置，最好也配置一下，没有20-nproc.<span class="hljs-keyword">conf</span>文件自行创建<br>    vim /etc/security/limits.<span class="hljs-keyword">d</span>/20-nproc.<span class="hljs-keyword">conf</span><br><span class="hljs-comment">    * soft nofile 65536</span><br><span class="hljs-comment">    * hard nofile 65536</span><br><span class="hljs-comment">    * soft nproc 131072</span><br><span class="hljs-comment">    * hard nproc 131072</span><br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>取消SELinux（Security Enforce Linux）</p>
+<ul>
+<li><pre><code class="shell"># 配置后不会立即生效，需要重启服务器，可以临时关闭
+vim /etc/selinux/config
+SELINUX=disabled
+
+# 临时关闭selinux
+setenforce 0
+
+# 获取selinux状态
+getenforce
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><br>- 使用rpm包离线安装<br><br>  - `需要下载四个rpm包`https:<span class="hljs-comment">//repo.yandex.ru/clickhouse/rpm/stable/x86_64/ </span><br><br>  - ~~~shell<br>    clickhouse-<span class="hljs-keyword">client</span><span class="hljs-number">-21.7</span><span class="hljs-number">.3</span><span class="hljs-number">.14</span><span class="hljs-number">-2.</span>noarch.rpm<br>    clickhouse-<span class="hljs-keyword">common</span>-<span class="hljs-keyword">static</span><span class="hljs-number">-21.7</span><span class="hljs-number">.3</span><span class="hljs-number">.14</span><span class="hljs-number">-2.</span>x86_64.rpm<br>    clickhouse-<span class="hljs-keyword">server</span><span class="hljs-number">-21.7</span><span class="hljs-number">.3</span><span class="hljs-number">.14</span><span class="hljs-number">-2.</span>noarch.rpm<br>    clickhouse-<span class="hljs-keyword">common</span>-<span class="hljs-keyword">static</span>-dbg<span class="hljs-number">-21.7</span><span class="hljs-number">.3</span><span class="hljs-number">.14</span><span class="hljs-number">-2.</span>x86_64.rpm<br>    <br>    <span class="hljs-meta"># 安装rpm包</span><br>    rpm -ivh *.rpm<br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>使用rpm安装的默认路径解释</p>
+<table>
+<thead>
+<tr>
+<th>安装路径</th>
+<th>含 义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;etc&#x2F;</td>
+<td>配置文件安装目录</td>
+</tr>
+<tr>
+<td>&#x2F;usr&#x2F;bin&#x2F;</td>
+<td>可执行的命令安装目录</td>
+</tr>
+<tr>
+<td>&#x2F;usr&#x2F;lib&#x2F;</td>
+<td>程序所使用的函数库保存位置</td>
+</tr>
+<tr>
+<td>&#x2F;usr&#x2F;share&#x2F;doc&#x2F;</td>
+<td>基本的软件使用手册保存位置</td>
+</tr>
+<tr>
+<td>&#x2F;usr&#x2F;share&#x2F;man&#x2F;</td>
+<td>帮助文件保存位置</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>开启IPV6</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">将列出的ipv6相关配置更改为0</span><br>vim /etc/sysctl.conf<br>net.ipv6.conf.all.disable_ipv6 = 0<br>net.ipv6.conf.default.disable_ipv6 = 0<br>net.ipv6.conf.lo.disable_ipv6 = 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将列出的ipv6相关配置更改为0</span><br>vim /etc/modprobe.d/disable_ipv6.conf<br>options ipv6 disable=0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">开启IVP6</span><br>vim /etc/sysconfig/network<br>NETWORKING_IPV6=yes<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重启网络服务即可</span><br>systemctl restart network<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件</p>
+<ul>
+<li><p><code>在修改配置后，需要重启clickhouse-server，先关闭，后重启，别直接重启（直接重启可能不会重新加载配置文件），使用以下命令：</code></p>
+</li>
+<li><pre><code class="shell"># 关闭ck服务
+systemctl stop clickhouse-server
+
+# 启动ck服务
+systemctl start clickhouse-server
+
+###########################################
+
+# 修改配置文件，强制保存   :wq!
+vim /etc/clickhouse-server/config.xml
+
+# 去掉注释，开启远程连接，任意主机都可访问
+&lt;listen_host&gt;::&lt;/listen_host&gt;
+
+# 数据文件路径
+&lt;path&gt;/var/lib/clickhouse/&lt;/path&gt;
+
+# 日志文件路径
+&lt;log&gt;/var/log/clickhouse-server/clickhouse-server.log&lt;/log&gt;
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><br>- 启动<span class="hljs-keyword">Server</span><br><br>  - ~~~shell<br>    # 启动<span class="hljs-keyword">Server</span><br>    systemctl <span class="hljs-keyword">start</span> clickhouse-<span class="hljs-keyword">server</span><br>    <br>    # 设置开机自启<br>    systemctl <span class="hljs-keyword">enable</span> clickhouse-<span class="hljs-keyword">server</span><br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>启动client</p>
+<ul>
+<li><pre><code class="shell">clickhouse-client -m
+
+-m :可以在命令窗口输入多行命令，分号结束命令
+-h :主机名，访问其他主机的clickhouse-server服务
+-p :端口
+<figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs twig"><span class="language-xml"></span><br><span class="language-xml">### 集群安装（3节点）</span><br><span class="language-xml"></span><br><span class="language-xml">**安装zk集群，启动zk集群（略）**</span><br><span class="language-xml"></span><br><span class="language-xml">**集群3分片2副本3节点**（不推荐）</span><br><span class="language-xml"></span><br><span class="language-xml">- [3分片2副本3节点，涉及到单节点双实例配置]( https://www.cnblogs.com/linlf03/p/15392198.html )</span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">**集群2分片，其中1分片2副本，1分片1副本**</span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;%</span> <span class="hljs-name">asset_img</span> <span class="hljs-number">1648795270372</span>.png <span class="hljs-number">1648795270372</span> <span class="hljs-template-tag">%&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">- **在/etc/clickhouse-server/config.d创建`metrika.xml`，内容如下**</span><br><span class="language-xml"></span><br><span class="language-xml">  ~~~xml</span><br><span class="language-xml">  <span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">yandex</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">remote_servers</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-comment">&lt;!--集群名称--&gt;</span> </span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">clickhouse_cluster</span>&gt;</span> </span><br><span class="language-xml">              <span class="hljs-comment">&lt;!--集群的第一个分片--&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> </span><br><span class="language-xml">                  <span class="hljs-comment">&lt;!--副本之间内部同步打开--&gt;</span></span><br><span class="language-xml">                  <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span></span><br><span class="language-xml">                  <span class="hljs-comment">&lt;!--该分片的第一个副本--&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> </span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop102<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span></span><br><span class="language-xml">                  <span class="hljs-comment">&lt;!--该分片的第二个副本--&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> </span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop103<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-comment">&lt;!--集群的第二个分片--&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> </span><br><span class="language-xml">                   <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> </span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop104<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">                       <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">                   <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">clickhouse_cluster</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">remote_servers</span>&gt;</span></span><br><span class="language-xml">      </span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 不同节点需要对应进行修改 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">macros</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span>01<span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span> <span class="hljs-comment">&lt;!--不同机器放的分片数不一样--&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span>rep_1_1<span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span> <span class="hljs-comment">&lt;!--不同机器放的副本数不一样--&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">macros</span>&gt;</span></span><br><span class="language-xml">      </span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 对外开放所有地址 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">networks</span>&gt;</span></span><br><span class="language-xml">      	<span class="hljs-tag">&lt;<span class="hljs-name">ip</span>&gt;</span>::/0<span class="hljs-tag">&lt;/<span class="hljs-name">ip</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">networks</span>&gt;</span></span><br><span class="language-xml">  </span><br><span class="language-xml">      <span class="hljs-comment">&lt;!-- 数据压缩 --&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">clickhouse_compression</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">case</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">min_part_size</span>&gt;</span>10000000000<span class="hljs-tag">&lt;/<span class="hljs-name">min_part_size</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">min_part_size_ratio</span>&gt;</span>0.01<span class="hljs-tag">&lt;/<span class="hljs-name">min_part_size_ratio</span>&gt;</span></span><br><span class="language-xml">              <span class="hljs-tag">&lt;<span class="hljs-name">method</span>&gt;</span>lz4<span class="hljs-tag">&lt;/<span class="hljs-name">method</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">case</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">clickhouse_compression</span>&gt;</span></span><br><span class="language-xml">      </span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">zookeeper-servers</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop102<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop103<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;3&quot;</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop104<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span></span><br><span class="language-xml">               <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span></span><br><span class="language-xml">           <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">zookeeper-servers</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">yandex</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--hadoop102--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">macros</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span>01<span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span>rep_1_1<span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">macros</span>&gt;</span><br><br><span class="hljs-comment">&lt;!--hadoop103--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">macros</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span>01<span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span>rep_1_2<span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">macros</span>&gt;</span><br><br><span class="hljs-comment">&lt;!--hadoop104--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">macros</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span>02<span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span>rep_2_1<span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">macros</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改文件属主：属组</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chown clickhouse:clickhouse metrika.xml<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置&#x2F;etc&#x2F;clickhouse-server&#x2F;config.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 去掉注释，开启远程连接，任意主机都可访问 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">listen_host</span>&gt;</span>::<span class="hljs-tag">&lt;/<span class="hljs-name">listen_host</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 数据文件路径，可修改，可默认 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">path</span>&gt;</span>/var/lib/clickhouse/<span class="hljs-tag">&lt;/<span class="hljs-name">path</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 日志文件路径，默认即可 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">log</span>&gt;</span>/var/log/clickhouse-server/clickhouse-server.log<span class="hljs-tag">&lt;/<span class="hljs-name">log</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 引入外部配置文件 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">zookeeper</span> <span class="hljs-attr">incl</span>=<span class="hljs-string">&quot;zookeeper-servers&quot;</span> <span class="hljs-attr">optional</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">include_from</span>&gt;</span>/etc/clickhouse-server/config.d/metrika.xml<span class="hljs-tag">&lt;/<span class="hljs-name">include_from</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置完成后启动即可</strong></p>
+</li>
+<li><p><strong>集群是否安装成功</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动任意节点客户端</span><br>clickhouse-client -m<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">出现我们创建集群的集群名称即为配置成功</span><br>hadoop102 :) show clusters;<br>┌─cluster──────────────────────<br>│ clickhouse_cluster                           │<br>│ test_cluster_two_shards                      │<br>│ test_cluster_two_shards_internal_replication │<br>│ test_cluster_two_shards_localhost            │<br>│ test_shard_localhost                         │<br>│ test_shard_localhost_secure                  │<br>│ test_unavailable_shard                       │<br>└───────────────────────────<br></code></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><strong>具体集群中创建分布式表的操作跳转分片集群</strong></p>
+</li>
+</ul>
+<h2 id="ClickHouse可视化工具（DBeaver）"><a href="#ClickHouse可视化工具（DBeaver）" class="headerlink" title="ClickHouse可视化工具（DBeaver）"></a>ClickHouse可视化工具（DBeaver）</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://dbeaver.io/download/">DBeaver官方下载</a></li>
+<li>按照系统对应安装即可</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li><p><strong>整型</strong></p>
+<p>固定长度的整型，包括有符号整型或无符号整型。 </p>
+<p>整型范围（-2n-1~2n-1-1）： </p>
+<p><strong>clickhouse中的类型 —&gt; 类比java中的类型</strong></p>
+<p>Int8 - [-128 : 127]   —&gt;  byte 8bit</p>
+<p>Int16 - [-32768 : 32767]  —&gt;  short 16bit</p>
+<p>Int32 - [-2147483648 : 2147483647]  —&gt; int 32bit</p>
+<p>Int64 - [-9223372036854775808 : 9223372036854775807]   —&gt;   long 64bit</p>
+<p>无符号整型范围（0~2n-1）： </p>
+<p>UInt8 - [0 : 255] </p>
+<p>UInt16 - [0 : 65535] </p>
+<p>UInt32 - [0 : 4294967295] </p>
+<p>UInt64 - [0 : 18446744073709551615] </p>
+<p><strong>使用场景： 个数、数量、也可以存储型</strong> <strong>id</strong></p>
+</li>
+<li><p><strong>浮点型</strong></p>
+<p>Float32 - float </p>
+<p>Float64 – double </p>
+<p>建议尽可能以整数形式存储数据。例如，将固定精度的数字转换为整数值，如时间用毫秒为单位表示，因为浮点型进行计算时可能引起四舍五入的误差。</p>
+</li>
+<li><p>布尔类型</p>
+<p>没有单独的类型存储布尔值，可以使用UInt8类型，取值限制为0或1</p>
+</li>
+<li><p>Decimal类型</p>
+<p>有符号的浮点数，可在加减和乘法运算过程中保持精度。对于除法，最低有效数字会被丢弃</p>
+<p>三种声明方式：</p>
+<ul>
+<li>decimal32(s),共9位。如：decimal32(5),一共9位，保留5位小数，4位整数</li>
+<li>decimal64(s),共18位。如：decimal32(5),一共9位，保留5位小数，13位整数</li>
+<li>decimal128(s),共38位。如：decimal32(5),一共9位，保留5位小数，33位整数</li>
+</ul>
+</li>
+<li><p>字符串</p>
+<ul>
+<li>String：字符串可以是任意长度，它包含任意字符集，包含空字节</li>
+<li>FixedString(N)：固定长度N的字符串，不够N位，后续空字符补全，超过N位则报错，不常用</li>
+</ul>
+</li>
+<li><p>枚举类型</p>
+<p>包括Enum8和Enum16类型</p>
+<p>创建语法：Enum8(‘hello’&#x3D;1, ‘world’&#x3D;2)</p>
+<ul>
+<li>Enum8：’string’ &#x3D; int8</li>
+<li>Enum16：’string’ &#x3D; int16</li>
+</ul>
+</li>
+<li><p>时间类型</p>
+<ul>
+<li>Date：接收年-月-日的字符串，如：2022-03-16</li>
+<li>Datetime：接收年-月-日 时:分:秒，如：2022-03-16 00:00:00</li>
+<li>Datetime64：接收年-月-日 时:分:秒.亚秒，如：2022-03-16 00:00:00.66</li>
+</ul>
+</li>
+<li><p>数组类型</p>
+<ul>
+<li>Array（T）</li>
+</ul>
+</li>
+<li><p>Nullable</p>
+</li>
+</ul>
+<h2 id="表引擎"><a href="#表引擎" class="headerlink" title="表引擎"></a>表引擎</h2><p>表引擎是clickhouse一大特色</p>
+<ul>
+<li>数据存储的方式和位置，写到哪里以及到哪里读取</li>
+<li>支持那些查询以及如何支持</li>
+<li>并发数据访问</li>
+<li>索引的使用（如果存在）</li>
+<li>是否可以执行多线程请求</li>
+<li>数据复制参数</li>
+</ul>
+<p><code>Notes：引擎的名称大小写敏感</code></p>
+<h3 id="表引擎分类"><a href="#表引擎分类" class="headerlink" title="表引擎分类"></a>表引擎分类</h3><ul>
+<li><p>TinyLog</p>
+<p>以列文件的形式保存在磁盘上，不支持索引，没有并发控制，一般存储少量数据的小表</p>
+</li>
+<li><p>Memory</p>
+<p>内存引擎，数据以未压缩的的原始形式直接保存在内存中，服务器重启就会消失，读写操作不会相互阻塞，不支持索引，简单查询下有非常高的性能表现</p>
+</li>
+<li><p>Intergrations</p>
+<p>外部集成引擎，例如：MySQL的表，将其映射到CK中，直接可以在CK中查询</p>
+</li>
+<li><p>MergeTree</p>
+<p>Clickhouse中最强大的表引擎当属MergeTree引擎以及该系列的*MergeTree中的其他引擎，支持索引和分区，地位相当于innodb之于mysql，基于MergeTree还衍生除了很多非常有特色的引擎</p>
+<p><code>Notes：Order by必填</code></p>
+</li>
+<li><p>ReplacingMergeTree</p>
+<p>ReplacingMergeTree是MergeTree的一个变种，他完全继承了MergeTree，只是多了一个去重功能。<code>如果你想去除掉重复数据，可以使用此表引擎，去重是根据Order by字段进行的，去重不能跨分区，只有同一批数据或合并分区时才会进行去重，认定保留的数据为最大值，若值相同，则按照插入顺序，保留后插入的</code></p>
+<ul>
+<li><p>去重时机</p>
+<p><code>数据去重只会在合并的过程中出现，合并是在后台进行的，你无法预知时间，可能会有一些数据仍然未被处理</code></p>
+</li>
+<li><p>去重范围</p>
+<p>如果表经过多次分区，去重只会在分区内部进行去重，不能执行库跨分区的去重</p>
+</li>
+<li><p>去重解决方案（3种）</p>
+<p>高级部分补充。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+</li>
+</ul>
+</li>
+<li><p>SummingMergeTree</p>
+<p>适用于不查询明细数据，只关心维度进行汇总聚合结果的场景，如果只使用MergeTree的话，无论是存储的空间开销，还是查询时临时聚合的开销都比较大，Clickhouse为了应对该场景，提供了该预聚合的引擎</p>
+<ul>
+<li>以表中指定列进行汇总数据列</li>
+<li>列必须为数字列，如不填写，以所有<code>非维度列（非order by字段）</code>且为数字列的字段进行汇总</li>
+<li>以order by的列为准，作为<code>维度列</code></li>
+<li>只用同一批次数据或者合并数据是才会进行聚合</li>
+</ul>
+</li>
+</ul>
+<h3 id="手动合并命令"><a href="#手动合并命令" class="headerlink" title="手动合并命令"></a>手动合并命令</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 可手动进行合并</span><br>optimize <span class="hljs-keyword">table</span> table_name <span class="hljs-keyword">final</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="SQL语法"><a href="#SQL语法" class="headerlink" title="SQL语法"></a>SQL语法</h2><ul>
+<li><p>Insert</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 数据插入</span><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span>(table_name) <span class="hljs-keyword">values</span>(....)(....)<br><br><span class="hljs-comment">-- 表到表的插入</span><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span>(table_name1) <span class="hljs-keyword">select</span> a,b,c <span class="hljs-keyword">from</span> (table_name2)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Update 和 Delete</p>
+<p>Clickhouse提供了Delete和Update的能力，这类查询可看作为Mutation查询，它可以看作Alter的一种。</p>
+<p>虽然可以实现修改和删除，但是和OLTP数据库不同，Mutation语句是一种很‘重’的操作，而且不支持事务</p>
+<p>‘重’的原因是每次修改或者删除会导致放弃目标数据的原有分区，重新建立新的分区，所以尽量做批量的变更，不要进行小数据的操作</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- delete操作</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> table_name <span class="hljs-keyword">delete</span> <span class="hljs-keyword">where</span> (<span class="hljs-keyword">condition</span>)<br><br><span class="hljs-comment">-- update 操作</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> table_name <span class="hljs-keyword">update</span> <span class="hljs-keyword">column</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">value</span> <span class="hljs-keyword">where</span> (<span class="hljs-keyword">condition</span>)<br></code></pre></td></tr></table></figure>
+
+<p><code>高效进行删除修改操作思路：</code></p>
+<ul>
+<li>主要思路就是更新和是删除操作增加标记字段</li>
+</ul>
+</li>
+<li><p>查询</p>
+<ul>
+<li>Clickhouse查询基本上和SQL差别不大</li>
+<li>支持子查询</li>
+<li>支持CET（Common Table Expression 公用表达式 with 子句）</li>
+<li>支持各种join操作，但是join无法使用缓存，所以即便是两次相同的join语句ck也会视为两条新SQL，<strong>尽量避免使用</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">rollup</span> 上卷<br><span class="hljs-comment">--例如：</span><br>	<span class="hljs-keyword">rollup</span>(a,b) 相当于一下三种情况的集合<br>		<span class="hljs-comment">---&gt; 无条件的分组</span><br>		<span class="hljs-comment">---&gt; group by a</span><br>		<span class="hljs-comment">---&gt; group by a,b</span><br>		<br><span class="hljs-keyword">cube</span> 多维分析<br><span class="hljs-comment">--例如：</span><br>	<span class="hljs-keyword">cube</span>(a,b) 相当于以下几种情况的集合<br>		<span class="hljs-comment">---&gt; 无条件的分组</span><br>		<span class="hljs-comment">---&gt; group by a</span><br>		<span class="hljs-comment">---&gt; group by b</span><br>		<span class="hljs-comment">---&gt; group by a,b</span><br><br>total 统计<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>alter</p>
+</li>
+<li><p>导出数据</p>
+</li>
+</ul>
+<p><strong>二级索引</strong></p>
+<p><strong>TTL</strong></p>
+<ul>
+<li><p>字段级别</p>
+</li>
+<li><p>表级别</p>
+<p><code>Notes：指定的字段不可以使用主键字段</code></p>
+</li>
+</ul>
+<h2 id="副本"><a href="#副本" class="headerlink" title="副本"></a>副本</h2><h3 id="副本写入流程"><a href="#副本写入流程" class="headerlink" title="副本写入流程"></a>副本写入流程</h3><p><code>clickhouse-a，clickhouse-b互为副本没有主从之分</code></p>
+<img src="/2023/12/22/Clickhouse/1647501880366.png" srcset="/img/loading.gif" lazyload class="" width="1647501880366">
+
+<h3 id="副本启动"><a href="#副本启动" class="headerlink" title="副本启动"></a>副本启动</h3><ol>
+<li><p>启动zookeeper集群</p>
+</li>
+<li><p>在<code>/etc/clickhouse-server/config.d</code>下创建名为<code>metrika.xml</code>，内容如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">yandex</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">zookeeper-servers</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop01<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop02<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">node</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;3&quot;</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop03<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2181<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">node</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">zookeeper-servers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">yandex</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改文件属主：属组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chown clickhouse:clickhouse metrika.xml<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>/etc/clickhouse-server/config.xml</code>中添加如下配置，引入外部配置文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">zookeeper</span> <span class="hljs-attr">incl</span>=<span class="hljs-string">&quot;zookeeper-servers&quot;</span> <span class="hljs-attr">optional</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">include_from</span>&gt;</span>/etc/clickhouse-server/config.d/metrika.xml<span class="hljs-tag">&lt;/<span class="hljs-name">include_from</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置完成重启clickhouse即可</p>
+</li>
+<li><p>创建副本表，<code>副本只能同步数据，不能同步表结构，所以我们需要在每台机器上自己手动建表</code></p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs sql">hadoop01 :) <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> t_order_rep (<br>                 id UInt32,<br>                 sku_id String,<br>                 total_amount <span class="hljs-type">Decimal</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),<br>                 create_time Datetime<br>                ) engine <span class="hljs-operator">=</span>ReplicatedMergeTree(<span class="hljs-string">&#x27;/clickhouse/table/01/t_order_rep2&#x27;</span>,<span class="hljs-string">&#x27;rep_01&#x27;</span>)<br>                 <span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> toYYYYMMDD(create_time)<br>                 <span class="hljs-keyword">primary</span> key (id)<br>                 <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> (id,sku_id);<br> <br>hadoop02 :) <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> t_order_rep (<br>                 id UInt32,<br>                 sku_id String,<br>                 total_amount <span class="hljs-type">Decimal</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),<br>                 create_time Datetime<br>                ) engine <span class="hljs-operator">=</span>ReplicatedMergeTree(<span class="hljs-string">&#x27;/clickhouse/table/01/t_order_rep&#x27;</span>,<span class="hljs-string">&#x27;rep_02&#x27;</span>)<br>                 <span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> toYYYYMMDD(create_time)<br>                 <span class="hljs-keyword">primary</span> key (id)<br>                 <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> (id,sku_id);<br> <br>hadoop03 :)  <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> t_order_rep (<br>                 id UInt32,<br>                 sku_id String,<br>                 total_amount <span class="hljs-type">Decimal</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),<br>                 create_time Datetime<br>                ) engine <span class="hljs-operator">=</span>ReplicatedMergeTree(<span class="hljs-string">&#x27;/clickhouse/table/01/t_order_rep&#x27;</span>,<span class="hljs-string">&#x27;rep_03&#x27;</span>)<br>                 <span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> toYYYYMMDD(create_time)<br>                 <span class="hljs-keyword">primary</span> key (id)<br>                 <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> (id,sku_id);<br>                 <br><br><span class="hljs-comment">-- 在一台节点插入数据，其他节点自动同步</span><br>hadoop01 :)  <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> t_order_rep <span class="hljs-keyword">values</span><br>(<span class="hljs-number">101</span>,<span class="hljs-string">&#x27;sku_001&#x27;</span>,<span class="hljs-number">1000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">102</span>,<span class="hljs-string">&#x27;sku_002&#x27;</span>,<span class="hljs-number">2000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">103</span>,<span class="hljs-string">&#x27;sku_004&#x27;</span>,<span class="hljs-number">2500.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">104</span>,<span class="hljs-string">&#x27;sku_002&#x27;</span>,<span class="hljs-number">2000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">105</span>,<span class="hljs-string">&#x27;sku_003&#x27;</span>,<span class="hljs-number">600.00</span>,<span class="hljs-string">&#x27;2020-06-02 12:00:00&#x27;</span>);<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="分片集群"><a href="#分片集群" class="headerlink" title="分片集群"></a>分片集群</h2><p>副本虽然可以提高数据的可用性，降低丢失风险，但是每台服务器实际上必须容纳全量数据，对数据的<code>横向扩展</code>没有解决</p>
+<p>要解决数据水平切分问题，需要引入分片的概念。通过分片把一份完整的数据进行切分，不同的分片分布到不同的节点上，再通过Distributed表引擎把数据拼接起来一同使用</p>
+<p><strong>Distributed表引擎本身不存储数据，数据存储在节点本地存储系统中</strong>，有点类似MyCat之于MySql，成为一种中间件，通过分布式逻辑表来写入、分发、路由来操作多台节点不同分片的分布式数据</p>
+<p><code>Notes：Clickhouse的集群是表级别的，实际企业中，大部分做了高可用，但是没有用分片，避免降低查询性能以及集群操作的复杂性</code></p>
+<h3 id="集群写入流程"><a href="#集群写入流程" class="headerlink" title="集群写入流程"></a>集群写入流程</h3><img src="/2023/12/22/Clickhouse/1648779049635.png" srcset="/img/loading.gif" lazyload class="" width="1648779049635">
+
+<h3 id="集群读取流程"><a href="#集群读取流程" class="headerlink" title="集群读取流程"></a>集群读取流程</h3><img src="/2023/12/22/Clickhouse/1648779096352.png" srcset="/img/loading.gif" lazyload class="" width="1648779096352">
+
+
+
+<p><strong>三分片两副本配置（可以配置六台节点也可以配置三台节点仅供参考）</strong></p>
+<ul>
+<li><p>在<code>/etc/clickhouse-server/config.d</code>下配置在<code>metrika.xml</code>中，内容如下</p>
+<ul>
+<li><p><strong>三节点配置，最好是一个分片副本一台节点，如果资源不够可以使用三台节点进行配置</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linlf03/p/15392198.html">3分片2副本3节点，涉及到单节点双实例配置</a></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">yandex</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote_servers</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--集群名称--&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">clickhouse_cluster</span>&gt;</span> <br>            <span class="hljs-comment">&lt;!--集群的第一个分片--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                <span class="hljs-comment">&lt;!--副本之间内部同步打开--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--该分片的第一个副本--&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop101<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--该分片的第二个副本--&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop102<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--集群的第二个分片--&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                 <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop102<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9001<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop103<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>             <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--集群的第三个分片--&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                 <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop103<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9001<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop101<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9001<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>             <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">clickhouse_cluster</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">remote_servers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">yandex</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>六节点配置</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">yandex</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote_servers</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--集群名称--&gt;</span> <br>        <span class="hljs-tag">&lt;<span class="hljs-name">clickhouse_cluster</span>&gt;</span> <br>            <span class="hljs-comment">&lt;!--集群的第一个分片--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                <span class="hljs-comment">&lt;!--副本之间内部同步打开--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--该分片的第一个副本--&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop101<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--该分片的第二个副本--&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop102<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--集群的第二个分片--&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                 <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop103<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop104<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>             <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--集群的第三个分片--&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">shard</span>&gt;</span> <br>                 <span class="hljs-tag">&lt;<span class="hljs-name">internal_replication</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">internal_replication</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop105<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">replica</span>&gt;</span> <br>                     <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>hadoop106<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9000<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">replica</span>&gt;</span><br>             <span class="hljs-tag">&lt;/<span class="hljs-name">shard</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">clickhouse_cluster</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">remote_servers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">yandex</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="分片集群创建分布式表"><a href="#分片集群创建分布式表" class="headerlink" title="分片集群创建分布式表"></a>分片集群创建分布式表</h3><ul>
+<li><p>创建本地表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> st_order_rmt666 <span class="hljs-keyword">on</span> cluster clickhouse_cluster (<br> id UInt32,<br> sku_id String,<br> total_amount <span class="hljs-type">Decimal</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),<br> create_time Datetime<br>) engine <br><span class="hljs-operator">=</span>ReplicatedMergeTree(<span class="hljs-string">&#x27;/clickhouse/tables/&#123;shard&#125;/st_order_rmt666&#x27;</span>,<span class="hljs-string">&#x27;&#123;replica&#125;&#x27;</span>)<br> <span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> toYYYYMMDD(create_time)<br> <span class="hljs-keyword">primary</span> key (id)<br> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> (id,sku_id);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建分布式表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> st_order_rmt666_all <span class="hljs-keyword">on</span> cluster clickhouse_cluster<br>(<br> id UInt32,<br> sku_id String,<br> total_amount <span class="hljs-type">Decimal</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),<br> create_time Datetime<br>)engine <span class="hljs-operator">=</span> Distributed(clickhouse_cluster,<span class="hljs-keyword">default</span>, st_order_rmt666,hiveHash(sku_id));<br><br><span class="hljs-comment">-- Distributed（集群名称，库名，本地表名，分片键）</span><br><span class="hljs-comment">-- 分片键必须是整型数字，所以用 hiveHash 函数转换</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>插入测试数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> st_order_rmt666_all <span class="hljs-keyword">values</span><br>(<span class="hljs-number">201</span>,<span class="hljs-string">&#x27;sku_001&#x27;</span>,<span class="hljs-number">1000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>) ,<br>(<span class="hljs-number">202</span>,<span class="hljs-string">&#x27;sku_002&#x27;</span>,<span class="hljs-number">2000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">203</span>,<span class="hljs-string">&#x27;sku_004&#x27;</span>,<span class="hljs-number">2500.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">204</span>,<span class="hljs-string">&#x27;sku_002&#x27;</span>,<span class="hljs-number">2000.00</span>,<span class="hljs-string">&#x27;2020-06-01 12:00:00&#x27;</span>),<br>(<span class="hljs-number">205</span>,<span class="hljs-string">&#x27;sku_003&#x27;</span>,<span class="hljs-number">600.00</span>,<span class="hljs-string">&#x27;2020-06-02 12:00:00&#x27;</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看数据</p>
+<img src="/2023/12/22/Clickhouse/1648799917430.png" srcset="/img/loading.gif" lazyload class="" width="1648799917430">
+
+<img src="/2023/12/22/Clickhouse/1648800591071.png" srcset="/img/loading.gif" lazyload class="" width="1648800591071"></li>
+</ul>
+<h1 id="Clickhouse高级"><a href="#Clickhouse高级" class="headerlink" title="Clickhouse高级"></a>Clickhouse高级</h1><h2 id="Explain查看执行计划"><a href="#Explain查看执行计划" class="headerlink" title="Explain查看执行计划"></a>Explain查看执行计划</h2><p>在 clickhouse 20.6 版本之前要查看 SQL 语句的执行计划需要设置日志级别为 trace 才能可以看到，并且只能真正执行 sql，在执行日志里面查看。在 20.6 版本引入了原生的执行计划的语法。在 <strong>20.6.3 版本</strong>成为正式版本的功能。 </p>
+<ol>
+<li><p>基本语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">EXPLAIN [AST <span class="hljs-operator">|</span> SYNTAX <span class="hljs-operator">|</span> PLAN <span class="hljs-operator">|</span> PIPELINE] [setting <span class="hljs-operator">=</span> <span class="hljs-keyword">value</span>, ...] <br><span class="hljs-keyword">SELECT</span> ... [FORMAT ...]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>PLAN：用于查看执行计划，默认值</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>header 打印计划中各个步骤的 head 说明，默认关闭，默认值 0;<ul>
+<li>description 打印计划中各个步骤的描述，默认开启，默认值 1； </li>
+<li>actions 打印计划中各个步骤的详细信息，默认关闭，默认值 0</li>
+</ul>
+</li>
+<li>AST ：用于查看语法树</li>
+<li>SYNTAX：用于优化语法; </li>
+<li>PIPELINE：用于查看 PIPELINE 计划。 <ul>
+<li>header 打印计划中各个步骤的 head 说明，默认关闭; </li>
+<li>graph 用 DOT 图形语言描述管道图，默认关闭，需要查看相关的图形需要配合 graphviz 查看； </li>
+<li>actions 如果开启了 graph，紧凑打印打，默认开启。</li>
+</ul>
+</li>
+</ul>
+<p>   <code>Notes：</code>PLAN和PIPELINE还可以进行额外的显示设置，如上参数所示</p>
+<h2 id="建表优化"><a href="#建表优化" class="headerlink" title="建表优化"></a>建表优化</h2><h3 id="数据类型优化"><a href="#数据类型优化" class="headerlink" title="数据类型优化"></a>数据类型优化</h3><h4 id="时间类型"><a href="#时间类型" class="headerlink" title="时间类型"></a>时间类型</h4><p>建表时能用数值型或日期时间型表示的字段就不要用字符串，全 String 类型在以 Hive 为中心的数仓建设中常见，但 ClickHouse 环境不应受此影响。 </p>
+<p>虽然 ClickHouse 底层将 DateTime 存储为时间戳 Long 类型，但不建议存储 Long 类型，因为 <code>DateTime 不需要经过函数转换处理，执行效率高、可读性好</code>。 </p>
+<h4 id="空值存储"><a href="#空值存储" class="headerlink" title="空值存储"></a>空值存储</h4><p>官方已经指出 <strong>Nullable</strong> <strong>类型几乎总是会拖累性能</strong>，因为<code>存储 Nullable 列时需要创建一个</code> </p>
+<p><code>额外的文件来存储 NULL 的标记，并且 Nullable 列无法被索引</code>。因此除非极特殊情况，应直 </p>
+<p>接使用字段默认值表示空，或者自行指定一个在业务中无意义的值</p>
+<h3 id="分区和索引"><a href="#分区和索引" class="headerlink" title="分区和索引"></a>分区和索引</h3><p>分区粒度根据业务特点决定，不宜过粗或过细。一般选择<strong>按天分区</strong>，也可以指定为 Tuple()，以单表一亿数据为例，分区大小控制在 10-30 个为最佳。</p>
+<p>必须指定索引列，ClickHouse 中的索引列即排序列，通过 order by 指定，一般在查询条件中经常被用来充当筛选条件的属性被纳入进来；可以是单一维度，也可以是组合维度的索引；通常需要满足高级列在前、查询频率大的在前原则；还有基数特别大的不适合做索引列， 如用户表的 userid 字段；通常<strong>筛选后的数据满足在百万以内为最佳</strong>。</p>
+<h3 id="表参数"><a href="#表参数" class="headerlink" title="表参数"></a>表参数</h3><p><code>Index_granularity 是用来控制索引粒度的，默认是 8192，如非必须不建议调整。</code> </p>
+<p>如果表中不是必须保留全量历史数据，建议<code>指定 TTL</code>（生存时间值），可以免去手动过期历史数据的麻烦，TTL 也可以通过 alter table 语句随时修改</p>
+<h3 id="写入和删除优化"><a href="#写入和删除优化" class="headerlink" title="写入和删除优化"></a>写入和删除优化</h3><ol>
+<li><p>尽量不要执行单条或小批量删除和插入操作，这样会产生小分区文件，给后台Merge任务带来巨大压力</p>
+</li>
+<li><p>不要一次性写入太多分区，或写入数据太快，数据写入太快会导致Merge速度跟不上而报错，一般建议每秒发起2-3次写入操作，每次操作写入2w~5w条数据（根据服务器性能而定）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">写入过快报错信息：</span><br>1. Code: 252, e.displayText() = DB::Exception: Too many parts(304). <br>Merges are processing significantly slower than inserts<br>2. Code: 241, e.displayText() = DB::Exception: Memory limit (for query) <br>exceeded:would use 9.37 GiB (attempt to allocate chunk of 301989888 <br>bytes), maximum: 9.31 GiB<br></code></pre></td></tr></table></figure>
+
+<p>处理方式： </p>
+<p>“ Too many parts 处理 ” ：使用 WAL 预写日志，提高写入性能。 <code>in_memory_parts_enable_wal</code> 默认为 true 。</p>
+<p>在服务器内存充裕的情况下增加内存配额，一般通过 <code>max_memory_usage</code> 来实现</p>
+<p>在服务器内存不充裕的情况下，建议将超出部分内容分配到系统硬盘上，但会降低执行速度，一般通过<code>max_bytes_before_external_group_by、max_bytes_before_external_sort</code> 参数来实现。</p>
+</li>
+</ol>
+<h3 id="常见配置"><a href="#常见配置" class="headerlink" title="常见配置"></a>常见配置</h3><p><a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/">config.xm配置项</a></p>
+<p><a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/operations/settings/">user.xml配置项</a></p>
+<h4 id="CPU资源"><a href="#CPU资源" class="headerlink" title="CPU资源"></a>CPU资源</h4><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>background_pool_size</td>
+<td>后台线程池的大小，merge 线程就是在该线程池中执行，该线程池 不仅仅是给 merge 线程用的，默认值 16，允许的前提下建议改成 <strong>cpu 个数的 2 倍（线程数）</strong>。</td>
+</tr>
+<tr>
+<td>background_schedule_pool_size</td>
+<td>执行后台任务（复制表、Kafka 流、DNS 缓存更新）的线程数。默认 128，建议改成 <strong>cpu 个数的 2 倍</strong>（线程数）。</td>
+</tr>
+<tr>
+<td>background_distributed_schedule_ pool_size</td>
+<td>设置为分布式发送执行后台任务的线程数，默认 16，建议改成 <strong>cpu个数的 2 倍（线程数）</strong>。</td>
+</tr>
+<tr>
+<td>max_concurrent_queries</td>
+<td>最大并发处理的请求数(包含 select,insert 等)，默认值 100，推荐 150(不够再加)~300</td>
+</tr>
+<tr>
+<td>max_threads</td>
+<td>设置单个查询所能使用的最大 cpu 个数，默认是 cpu 核数</td>
+</tr>
+</tbody></table>
+<h4 id="内存资源"><a href="#内存资源" class="headerlink" title="内存资源"></a>内存资源</h4><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>max_memory_usage</td>
+<td>此参数在 users.xml 中,表示单次 Query 占用内存最大值，该值可以设置的比较大，这样可以提升集群查询的上限。保留一点给 OS，比如 <strong>128G 内存的机器，设置为 100GB。</strong></td>
+</tr>
+<tr>
+<td>max_bytes_before_external_group_by</td>
+<td>一般按照 max_memory_usage 的一半设置内存，当 group 使用内存超过阈值后会刷新到磁盘进行。<br>因为 clickhouse 聚合分两个阶段：查询并及建立中间数据、合并中间数据，<strong>结合上一项，建议 50GB。</strong></td>
+</tr>
+<tr>
+<td>max_bytes_before_external_sort</td>
+<td>当 order by 已使用 max_bytes_before_external_sort 内存就进行溢写磁盘(基于磁盘排序)，如果不设置该值，那么当内存不够时直接抛错，设置了该值 order by 可以正常完成，但是速度相对存内存来说肯定要慢点(实测慢的非常多，无法接受)。</td>
+</tr>
+<tr>
+<td>max_table_size_to_drop</td>
+<td>此参数在 config.xml 中，应用于需要删除表或分区的情况，默认是50GB，意思是如果删除 50GB 以上的分区表会失败。<strong>建议修改为 0</strong>，这样不管多大的分区表都可以删除。</td>
+</tr>
+</tbody></table>
+<h4 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h4><p>ClickHouse 不支持设置多数据目录，为了提升数据 io 性能，可以挂载虚拟券组，一个券组绑定多块物理磁盘提升读写性能，多数据查询场景 SSD 会比普通机械硬盘快 2-3 倍</p>
+<h2 id="ClickHouse语法优化"><a href="#ClickHouse语法优化" class="headerlink" title="ClickHouse语法优化"></a>ClickHouse语法优化</h2><p>ClickHouse 的 SQL 优化规则是基于 RBO(Rule Based Optimization)，下面是一些优化规则</p>
+<h3 id="Count优化"><a href="#Count优化" class="headerlink" title="Count优化"></a>Count优化</h3><p>在查询表中数据总量时，使用count()或者count(*)，且没有where语句，则直接查询system.tables 的 total_rows（总数是有记录，可以直接查询，不需要针对数据进行读取后统计）</p>
+<p>如果查询中使用count(column_name)，则将会读取数据进行统计没有做优化</p>
+<h3 id="消除子查询重复列"><a href="#消除子查询重复列" class="headerlink" title="消除子查询重复列"></a>消除子查询重复列</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- sql_1</span><br><span class="hljs-comment">-- 子查询中出现重复列</span><br><span class="hljs-keyword">select</span> a.trip_id <span class="hljs-keyword">AS</span> a_trip,<br> b.trip_id <span class="hljs-keyword">AS</span> b_trip,<br> b.vendor_id<br><span class="hljs-keyword">FROM</span><br>	trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> (<br>	<span class="hljs-keyword">SELECT</span><br>		trip_id,<br>		vendor_id, <br>		vendor_id	<span class="hljs-comment">-- 子查询中出现重复列</span><br>	<span class="hljs-keyword">FROM</span><br>		trips<br>) 　<span class="hljs-keyword">AS</span> b <span class="hljs-keyword">USING</span> (trip_id)<br>LIMIT <span class="hljs-number">5</span>;<br><br><span class="hljs-comment">-- 进行语法优化</span><br>EXPLAIN syntax <span class="hljs-keyword">SELECT</span><br>	a.trip_id <span class="hljs-keyword">AS</span> a_trip,<br>	b.trip_id <span class="hljs-keyword">AS</span> b_trip,<br>	b.vendor_id<br><span class="hljs-keyword">FROM</span><br>	trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> (<br>	<span class="hljs-keyword">SELECT</span><br>		trip_id,<br>		vendor_id,<br>		vendor_id<br>	<span class="hljs-keyword">FROM</span><br>		trips<br>) 　<span class="hljs-keyword">AS</span> b <span class="hljs-keyword">USING</span> (trip_id)<br>LIMIT <span class="hljs-number">5</span>;<br><br><span class="hljs-comment">-- sql_2</span><br><span class="hljs-comment">-- 进行优化的结果，将子查询中重复列自动优化保留一列</span><br><span class="hljs-keyword">SELECT</span><br>	a.trip_id <span class="hljs-keyword">AS</span> a_trip,<br>	b.trip_id <span class="hljs-keyword">AS</span> b_trip,<br>	b.vendor_id<br><span class="hljs-keyword">FROM</span><br>	trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> (<br>	<span class="hljs-keyword">SELECT</span><br>		trip_id,<br>		vendor_id<br>	<span class="hljs-keyword">FROM</span><br>		trips<br>) 　<span class="hljs-keyword">AS</span> b <span class="hljs-keyword">USING</span> (trip_id)<br>LIMIT <span class="hljs-number">5</span>;<br></code></pre></td></tr></table></figure>
+
+<p><code>Notes：</code>即便是查询时使用了sql_1，clickhouse也会自动优化为sql_2，在进行查询</p>
+<h3 id="谓词下推"><a href="#谓词下推" class="headerlink" title="谓词下推"></a>谓词下推</h3><p> 将过滤条件表达式（&#x3D;、！&#x3D;、like、in、between、&gt;、&lt;…）尽量靠近要过滤的数据源，达到尽早过滤无用数据的目的。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	(<br>		<span class="hljs-keyword">SELECT</span><br>			<span class="hljs-operator">*</span><br>		<span class="hljs-keyword">FROM</span><br>			(<span class="hljs-keyword">SELECT</span> trip_id <span class="hljs-keyword">FROM</span> trips)<br>		<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span><br>			<span class="hljs-keyword">SELECT</span><br>				<span class="hljs-operator">*</span><br>			<span class="hljs-keyword">FROM</span><br>				(<span class="hljs-keyword">SELECT</span> vendor_id <span class="hljs-keyword">FROM</span> trips)<br>	)<br><span class="hljs-keyword">WHERE</span><br>	trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span>;<br>	<br><span class="hljs-comment">-- 进行优化的sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	(<br>		<span class="hljs-keyword">SELECT</span><br>			<span class="hljs-operator">*</span><br>		<span class="hljs-keyword">FROM</span><br>			(<br>				<span class="hljs-keyword">SELECT</span><br>					trip_id<br>				<span class="hljs-keyword">FROM</span><br>					trips<br>				<span class="hljs-keyword">WHERE</span><br>					trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span><br>			)<br>		<span class="hljs-keyword">WHERE</span><br>			trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span><br>		<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span><br>			<span class="hljs-keyword">SELECT</span><br>				<span class="hljs-operator">*</span><br>			<span class="hljs-keyword">FROM</span><br>				(<br>					<span class="hljs-keyword">SELECT</span><br>						vendor_id<br>					<span class="hljs-keyword">FROM</span><br>						trips<br>					<span class="hljs-keyword">WHERE</span><br>						trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span><br>				)<br>			<span class="hljs-keyword">WHERE</span><br>				trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span><br>	)<br><span class="hljs-keyword">WHERE</span><br>	trip_id <span class="hljs-operator">=</span> <span class="hljs-number">1201746944</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="聚合计算外推"><a href="#聚合计算外推" class="headerlink" title="聚合计算外推"></a>聚合计算外推</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 原始sql</span><br>syntax <span class="hljs-keyword">SELECT</span><br>	<span class="hljs-built_in">sum</span>(trip_id <span class="hljs-operator">*</span> <span class="hljs-number">2</span>)<br><span class="hljs-keyword">FROM</span><br>	trips;<br>	<br><span class="hljs-comment">-- 优化sql</span><br>syntax <span class="hljs-keyword">SELECT</span><br>	<span class="hljs-built_in">sum</span>(trip_id) <span class="hljs-operator">*</span> <span class="hljs-number">2</span><br><span class="hljs-keyword">FROM</span><br>	trips;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="聚合消除"><a href="#聚合消除" class="headerlink" title="聚合消除"></a>聚合消除</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-built_in">max</span>(trip_id)<br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span><br>	trip_id;<br>	<br><span class="hljs-comment">-- 优化sql</span><br><span class="hljs-keyword">SELECT</span><br>	trip_id	<span class="hljs-comment">-- 无意义的计算会进行消除</span><br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span><br>	trip_id;<br>	<br><span class="hljs-comment">-- 原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-built_in">sum</span>(trip_id)<br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span><br>	trip_id;<br>	<br><span class="hljs-comment">-- 优化sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-built_in">sum</span>(trip_id) <span class="hljs-comment">-- 求和函数不会消除</span><br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span><br>	trip_id;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除重复-Order-by-key"><a href="#删除重复-Order-by-key" class="headerlink" title="删除重复 Order by key"></a>删除重复 Order by key</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">--  原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span><br>	trip_id,<br>	trip_id;<br>	<br><span class="hljs-comment">-- 优化sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span><br>	trip_id<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除重复-Limit-by-key"><a href="#删除重复-Limit-by-key" class="headerlink" title="删除重复 Limit by key"></a>删除重复 Limit by key</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">--  原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips<br>Limit <span class="hljs-number">3</span> <span class="hljs-keyword">BY</span><br>	trip_id,<br>	trip_id;<br>	<br><span class="hljs-comment">--  优化sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips<br>Limit <span class="hljs-number">3</span> <span class="hljs-keyword">BY</span><br>	trip_id;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除重复Using-key"><a href="#删除重复Using-key" class="headerlink" title="删除重复Using key"></a>删除重复Using key</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">--  原始sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> trips <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">Using</span>(trip_id,trip_id);<br><br><span class="hljs-comment">--  优化sql</span><br><span class="hljs-keyword">SELECT</span><br>	<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span><br>	trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> trips <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">Using</span>(trip_id);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 原始sql</span><br><span class="hljs-keyword">WITH</span> (<br>        <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">sum</span>(bytes)<br>        <span class="hljs-keyword">FROM</span> system.parts<br>        <span class="hljs-keyword">WHERE</span> active<br>    ) <span class="hljs-keyword">AS</span> total_disk_usage<br><span class="hljs-keyword">SELECT</span><br>    (<span class="hljs-built_in">sum</span>(bytes) <span class="hljs-operator">/</span> total_disk_usage) <span class="hljs-operator">*</span> <span class="hljs-number">100</span> <span class="hljs-keyword">AS</span> table_disk_usage,<br>    <span class="hljs-keyword">table</span><br><span class="hljs-keyword">FROM</span> system.parts<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">table</span><br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> table_disk_usage <span class="hljs-keyword">DESC</span><br>LIMIT <span class="hljs-number">10</span>;<br><br><span class="hljs-comment">-- 优化Sql</span><br>┌─explain──────────────────────────────────────────<br>│ <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">identity</span>(<span class="hljs-built_in">CAST</span>(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;UInt64&#x27;</span>)) <span class="hljs-keyword">AS</span> total_disk_usage                            │<br>│ <span class="hljs-keyword">SELECT</span>                                                                          │<br>│     (<span class="hljs-built_in">sum</span>(bytes_on_disk <span class="hljs-keyword">AS</span> bytes) <span class="hljs-operator">/</span> total_disk_usage) <span class="hljs-operator">*</span> <span class="hljs-number">100</span> <span class="hljs-keyword">AS</span> table_disk_usage, │<br>│     <span class="hljs-keyword">table</span>                                                                       │<br>│ <span class="hljs-keyword">FROM</span> system.parts                                                               │<br>│ <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">table</span>                                                                  │<br>│ <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> table_disk_usage <span class="hljs-keyword">DESC</span>                                                  │<br>│ LIMIT <span class="hljs-number">10</span>                                                                        │<br>└───────────────────────────────────────────────<br></code></pre></td></tr></table></figure>
+
+<h3 id="三元运算符优化"><a href="#三元运算符优化" class="headerlink" title="三元运算符优化"></a>三元运算符优化</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 开启优化策略，如果没有权限的话可以在查询语句中设置，表示针对本次查询生效</span><br><span class="hljs-keyword">set</span> optimize_if_chain_to_multiif <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><br><span class="hljs-comment">-- 原始sql</span><br>EXPLAIN SYNTAX <br><span class="hljs-keyword">SELECT</span> number <span class="hljs-operator">=</span> <span class="hljs-number">1</span> ? <span class="hljs-string">&#x27;hello&#x27;</span> : (number <span class="hljs-operator">=</span> <span class="hljs-number">2</span> ? <span class="hljs-string">&#x27;world&#x27;</span> : <span class="hljs-string">&#x27;atguigu&#x27;</span>) <br><span class="hljs-keyword">FROM</span> numbers(<span class="hljs-number">10</span>) <br>SETTINGS optimize_if_chain_to_multiif <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br><br><span class="hljs-comment">-- 优化sql</span><br>┌─explain───────────────────────────────────<br>│ <span class="hljs-keyword">SELECT</span> multiIf(number <span class="hljs-operator">=</span> <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;hello&#x27;</span>, number <span class="hljs-operator">=</span> <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;world&#x27;</span>, <span class="hljs-string">&#x27;atguigu&#x27;</span>) │<br>│ <span class="hljs-keyword">FROM</span> numbers(<span class="hljs-number">10</span>)                                                    │<br>│ SETTINGS optimize_if_chain_to_multiif <span class="hljs-operator">=</span> <span class="hljs-number">1</span>                           │<br>└────────────────────────────────────────<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h2><h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><h4 id="Prewhere代替where"><a href="#Prewhere代替where" class="headerlink" title="Prewhere代替where"></a>Prewhere代替where</h4><p>Prewhere 和 where 语句的作用相同，用来过滤数据。不同之处在于 prewhere 只支持 <em>MergeTree 族系列引擎的表，*<em>首先会读取指定的列数据，来判断数据过滤，等待数据过滤 之后再读取 select 声明的列字段来补全其余属性。</em></em></p>
+<p>当查询列明显多于筛选列时使用 Prewhere 可十倍提升查询性能，Prewhere 会自动优化执行过滤阶段的数据读取方式，降低 io 操作。</p>
+<p>默认情况，我们肯定不会关闭 where 自动优化成 prewhere，但是某些场景即使开启优化，也不会自动转换成 prewhere，需要手动指定 prewhere： </p>
+<ul>
+<li>使用常量表达式</li>
+<li>使用默认值为 alias 类型的字段 </li>
+<li>包含了 arrayJOIN，globalIn，globalNotIn 或者 indexHint 的查询</li>
+<li>select 查询的列字段和 where 的谓词相同</li>
+<li>使用了主键字段</li>
+</ul>
+<p><code>Notes：基本上在使用查询时就是用Prewhere就好</code></p>
+<h4 id="数据采样"><a href="#数据采样" class="headerlink" title="数据采样"></a>数据采样</h4><p>通过采样运算可极大提升数据分析的性能</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> Title,<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> PageViews <br><span class="hljs-keyword">FROM</span> hits_v1<br>SAMPLE <span class="hljs-number">0.1</span> <span class="hljs-comment">-- 代表采样 10%的数据,也可以是具体的条数</span><br><span class="hljs-keyword">WHERE</span> CounterID <span class="hljs-operator">=</span><span class="hljs-number">57</span><br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> Title<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> PageViews <span class="hljs-keyword">DESC</span> LIMIT <span class="hljs-number">1000</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="列裁剪和分区裁剪"><a href="#列裁剪和分区裁剪" class="headerlink" title="列裁剪和分区裁剪"></a>列裁剪和分区裁剪</h4><p>数据量太大时应避免使用 **select *** 操作，查询的性能会与查询的字段大小和数量成线性关系，字段越少，消耗的 io 资源越少，性能就会越高。</p>
+<p>列裁剪：查询时写出确定查询字段，不要使用 ***** 进行查询</p>
+<p>分区裁剪：查询时使用某个分区数据</p>
+<h4 id="Order-by-结合-where-limit使用"><a href="#Order-by-结合-where-limit使用" class="headerlink" title="Order by 结合 where limit使用"></a>Order by 结合 where limit使用</h4><p>单独使用Order by会进行全局排序，所以建议在使用的时候加上 where&#x2F;limit 进行使用</p>
+<h4 id="避免构建虚拟列"><a href="#避免构建虚拟列" class="headerlink" title="避免构建虚拟列"></a>避免构建虚拟列</h4><p>如非必须，不要在结果集上构建虚拟列（原数据集不存在的列），虚拟列非常消耗资源浪费性能，可以考虑在前端进行处理，或者在表中构造实际字段进行额外存储。</p>
+<h4 id="uniqCombined替代distinct"><a href="#uniqCombined替代distinct" class="headerlink" title="uniqCombined替代distinct"></a>uniqCombined替代distinct</h4><p>性能可提升 10 倍以上，uniqCombined 底层采用类似 HyperLogLog 算法实现，能接收 2%左右的数据误差，可直接使用这种去重方式提升查询性能。Count(distinct )会使用 uniqExact 精确去重。</p>
+<p>不建议在千万级不同数据上执行 distinct 去重查询，改为近似去重 uniqCombined。</p>
+<h4 id="使用物化视图"><a href="#使用物化视图" class="headerlink" title="使用物化视图"></a>使用物化视图</h4><p>mysql中的视图仅仅存储的时查询的逻辑，并没有将数据保存下来</p>
+<p>ck中的视图会将查询逻辑以及数据全部保存下来，称之为<strong>物化视图</strong></p>
+<h4 id="其他注意事项"><a href="#其他注意事项" class="headerlink" title="其他注意事项"></a>其他注意事项</h4><ul>
+<li><p>查询熔断</p>
+<blockquote>
+<p> 为了避免因个别慢查询引起的服务雪崩的问题，除了可以为单个查询设置超时以外，还可以配置周期熔断，在一个查询周期内，如果用户频繁进行慢查询操作超出规定阈值后将无法继续进行查询操作。</p>
+</blockquote>
+</li>
+<li><p>关闭虚拟内存</p>
+<blockquote>
+<p>物理内存和虚拟内存的数据交换，会导致查询变慢，<strong>资源允许的情况下</strong>关闭虚拟内存。</p>
+</blockquote>
+</li>
+<li><p>配置join_use_nulls</p>
+<blockquote>
+<p>为每一个账户添加 join_use_nulls 配置，左表中的一条记录在右表中不存在，右表的相应字段会返回该字段相应数据类型的默认值，而不是标准 SQL 中的 Null 值。</p>
+</blockquote>
+</li>
+<li><p>批量插入时先排序</p>
+<blockquote>
+<p>批量写入数据时，必须控制每个批次的数据中涉及到的分区的数量，在写入之前最好对需要导入的数据进行排序。无序的数据或者涉及的分区太多，会导致 ClickHouse 无法及时对新导入的数据进行合并，从而影响查询性能。 </p>
+</blockquote>
+</li>
+<li><p>关注CUP</p>
+<blockquote>
+<p>cpu 一般在 50%左右会出现查询波动，达到 70%会出现大范围的查询超时，cpu 是最关键的指标，要非常关注。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="多表关联"><a href="#多表关联" class="headerlink" title="多表关联"></a>多表关联</h3><ul>
+<li><p>准备数据以及表结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建一张小表</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> trips_v2 <br>ENGINE <span class="hljs-operator">=</span> MergeTree<br><span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> toYYYYMM(pickup_date)<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pickup_datetime<br><span class="hljs-comment">-- 根据trip_id字段进行抽样</span><br>SAMPLE <span class="hljs-keyword">BY</span> intHash32(trip_id)<br>SETTINGS index_granularity <span class="hljs-operator">=</span> <span class="hljs-number">8192</span><br><span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> trips limit <span class="hljs-number">10000</span>;<br><br><span class="hljs-comment">-- 创建空表，防止控制台疯狂打印</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> trips_v3<br>ENGINE <span class="hljs-operator">=</span> MergeTree<br><span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> toYYYYMM(pickup_date)<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pickup_datetime<br>SAMPLE <span class="hljs-keyword">BY</span> intHash32(trip_id)<br>SETTINGS index_granularity <span class="hljs-operator">=</span> <span class="hljs-number">8192</span><br><span class="hljs-keyword">as</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> trips <span class="hljs-keyword">where</span> <span class="hljs-number">1</span><span class="hljs-operator">=</span><span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>表中数据</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>数据量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trips</td>
+<td>1999657</td>
+</tr>
+<tr>
+<td>trips_v2</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>trips_v3</td>
+<td>0</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="用IN代替JOIN"><a href="#用IN代替JOIN" class="headerlink" title="用IN代替JOIN"></a>用IN代替JOIN</h4><p><strong>JOIN操作</strong>是将右表中的所有数据加载到内存中，然后左表中的数据一条一条查询内存中数据，所以最好尽量避免使用JOIN操作</p>
+<p>当多表联查时，查询的数据仅从其中一张表出时，可考虑用 IN 操作而不是 JOIN </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 使用in操作</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_v3 <span class="hljs-keyword">SELECT</span> a.<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">WHERE</span> a.trip_id <span class="hljs-keyword">IN</span> (<br>    <span class="hljs-keyword">SELECT</span> trip_id<br>    <span class="hljs-keyword">FROM</span> trips_v2<br>)<br><br><span class="hljs-comment">-- 耗时0.045 sec</span><br><span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">0.045</span> sec. Processed <span class="hljs-number">2.01</span> million <span class="hljs-keyword">rows</span>, <span class="hljs-number">10.99</span> MB (<span class="hljs-number">44.45</span> million <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">243.13</span> MB<span class="hljs-operator">/</span>s.)<br><br><br><span class="hljs-comment">-- 使用join操作</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_v3 <span class="hljs-keyword">SELECT</span> a.<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> trips_v2 <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">ON</span> a.trip_id <span class="hljs-operator">=</span> b.trip_id<br><br><span class="hljs-comment">-- 耗时6.258 sec</span><br><span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">6.258</span> sec. Processed <span class="hljs-number">2.01</span> million <span class="hljs-keyword">rows</span>, <span class="hljs-number">597.59</span> MB (<span class="hljs-number">321.13</span> thousand <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">95.49</span> MB<span class="hljs-operator">/</span>s.)<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="大小表Join"><a href="#大小表Join" class="headerlink" title="大小表Join"></a>大小表Join</h4><p>多表 join 时要满足<code>小表在右</code>的原则，右表关联时被加载到内存中与左表进行比较，ClickHouse 中无论是 Left join 、Right join 还是 Inner join 永远都是拿着右表中的每一条记录到左表中查找该记录是否存在，所以右表必须是小表。 </p>
+<p><code>数据量太小并没有测试出来想要的结果</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 小表在右</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_v3 <span class="hljs-keyword">SELECT</span> a.<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> trips <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> trips_v2 <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">ON</span> a.trip_id <span class="hljs-operator">=</span> b.trip_id<br><br><span class="hljs-comment">-- 耗时6.258 sec</span><br><span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">6.258</span> sec. Processed <span class="hljs-number">2.01</span> million <span class="hljs-keyword">rows</span>, <span class="hljs-number">597.59</span> MB (<span class="hljs-number">321.13</span> thousand <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">95.49</span> MB<span class="hljs-operator">/</span>s.)<br><br><span class="hljs-comment">-- 大表在右</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_v3 <span class="hljs-keyword">SELECT</span> a.<span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> trips_v2 <span class="hljs-keyword">AS</span> a<br><span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> trips <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">ON</span> a.trip_id <span class="hljs-operator">=</span> b.trip_id<br><br><span class="hljs-comment">-- 耗时0.199 sec</span><br><span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">0.199</span> sec. Processed <span class="hljs-number">2.01</span> million <span class="hljs-keyword">rows</span>, <span class="hljs-number">10.99</span> MB (<span class="hljs-number">10.10</span> million <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">55.23</span> MB<span class="hljs-operator">/</span>s.)<br></code></pre></td></tr></table></figure>
+
+<h4 id="分布式表要使用GLOBAL"><a href="#分布式表要使用GLOBAL" class="headerlink" title="分布式表要使用GLOBAL"></a>分布式表要使用GLOBAL</h4><p><code>两张分布式表</code>上的 IN 和 JOIN 之前必须加上 <code>GLOBAL 关键字</code>，右表只会在接收查询请求的那个节点查询一次，并将其分发到其他节点上。如果不加 GLOBAL 关键字的话，每个节点都会单独发起一次对右表的查询，而右表又是分布式表，就导致右表一共会被查询 N²次（N是该分布式表的分片数量），这就是<code>查询放大</code>，会带来很大开销。</p>
+<h4 id="使用字典表"><a href="#使用字典表" class="headerlink" title="使用字典表"></a>使用字典表</h4><p>将一些需要关联分析的业务创建成字典表进行 join 操作，前提是字典表不宜太大，因为<code>字典表会常驻内存</code></p>
+<h4 id="提前过滤数据"><a href="#提前过滤数据" class="headerlink" title="提前过滤数据"></a>提前过滤数据</h4><p>通过增加逻辑过滤可以减少数据扫描，达到提高执行速度及降低内存消耗的目的</p>
+<h2 id="数据一致性（重点）"><a href="#数据一致性（重点）" class="headerlink" title="数据一致性（重点）"></a>数据一致性（重点）</h2><p>查询 CK 手册发现，即便对数据一致性支持最好的 Mergetree，也只是保证<strong>最终一致性</strong></p>
+<p><code>ReplacingMergeTree</code>引擎和<strong>MergeTree</strong>的区别在于它会删除相同排序键值的重复项</p>
+<p>数据的去重只会在数据合并期间，合并会在后台一个不确定的时间进行，因此你无法预先做出计划，有些数据可能仍然未被处理。尽管你可以调用<strong>OPTIMIZE</strong>语句发起计划之外的合并，但请不要依靠它，因为<strong>OPTIMIZE语句会引发对数据的大量读写</strong></p>
+<p>因此<strong>ReplacingMergeTree</strong>适用于在后台清楚重复数据以节省空间，但是它不保证没有重复数据的出现。</p>
+<p>我们在使用ReplacingMergeTree、SummingMergeTree这类表引擎的时候，会出现短暂的数据不一致的情况。</p>
+<p>在某些对数据一致性非常敏感的场景中，通常有以下几种解决方案</p>
+<h3 id="准备测试数据"><a href="#准备测试数据" class="headerlink" title="准备测试数据"></a>准备测试数据</h3><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> test_a(<br> user_id UInt64,<br> score String,<br> deleted UInt8 <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,<br> create_time DateTime <span class="hljs-keyword">DEFAULT</span> toDateTime(<span class="hljs-number">0</span>)<br>)ENGINE<span class="hljs-operator">=</span> ReplacingMergeTree(create_time)<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> user_id;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>user_id 是数据去重更新的标识; </li>
+<li>create_time 是版本号字段，每组数据中 create_time 最大的一行表示最新的数据;</li>
+<li>deleted 是自定的一个标记位，比如 0 代表未删除，1 代表删除数据。</li>
+</ul>
+<h4 id="写入1000w数据"><a href="#写入1000w数据" class="headerlink" title="写入1000w数据"></a>写入1000w数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> test_a(user_id,score)<br><span class="hljs-keyword">WITH</span>(<br> <span class="hljs-keyword">SELECT</span> [<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;B&#x27;</span>,<span class="hljs-string">&#x27;C&#x27;</span>,<span class="hljs-string">&#x27;D&#x27;</span>,<span class="hljs-string">&#x27;E&#x27;</span>,<span class="hljs-string">&#x27;F&#x27;</span>,<span class="hljs-string">&#x27;G&#x27;</span>]<br>)<span class="hljs-keyword">AS</span> dict<br><span class="hljs-keyword">SELECT</span> number <span class="hljs-keyword">AS</span> user_id, dict[number<span class="hljs-operator">%</span><span class="hljs-number">7</span><span class="hljs-operator">+</span><span class="hljs-number">1</span>] <span class="hljs-keyword">FROM</span> numbers(<span class="hljs-number">10000000</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="修改前50w行数据，修改内容包括name和create-time字段"><a href="#修改前50w行数据，修改内容包括name和create-time字段" class="headerlink" title="修改前50w行数据，修改内容包括name和create_time字段"></a>修改前50w行数据，修改内容包括name和create_time字段</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> test_a(user_id,score,create_time)<br><span class="hljs-keyword">WITH</span>(<br> <span class="hljs-keyword">SELECT</span> [<span class="hljs-string">&#x27;AA&#x27;</span>,<span class="hljs-string">&#x27;BB&#x27;</span>,<span class="hljs-string">&#x27;CC&#x27;</span>,<span class="hljs-string">&#x27;DD&#x27;</span>,<span class="hljs-string">&#x27;EE&#x27;</span>,<span class="hljs-string">&#x27;FF&#x27;</span>,<span class="hljs-string">&#x27;GG&#x27;</span>]<br>)<span class="hljs-keyword">AS</span> dict<br><span class="hljs-keyword">SELECT</span> number <span class="hljs-keyword">AS</span> user_id, dict[number<span class="hljs-operator">%</span><span class="hljs-number">7</span><span class="hljs-operator">+</span><span class="hljs-number">1</span>], now() <span class="hljs-keyword">AS</span> create_time <span class="hljs-keyword">FROM</span> <br>numbers(<span class="hljs-number">500000</span>);<br><br><span class="hljs-comment">-- 统计数据总量</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>() <span class="hljs-keyword">FROM</span> test_a;<br><br><span class="hljs-comment">-- 还未触发分区合并，所以还未去重。</span><br>┌──<span class="hljs-built_in">count</span>()──┐<br>│   <span class="hljs-number">10500000</span>   │<br>└────────┘<br></code></pre></td></tr></table></figure>
+
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="手动OPTIMIZE"><a href="#手动OPTIMIZE" class="headerlink" title="手动OPTIMIZE"></a>手动OPTIMIZE</h4><p>在写入数据后，立刻执行 OPTIMIZE 强制触发新写入分区的合并动作，不推荐，会触发数据的大量读写。 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">OPTIMIZE <span class="hljs-keyword">TABLE</span> test_a <span class="hljs-keyword">FINAL</span>;<br><br><span class="hljs-comment">-- 语法</span><br>OPTIMIZE <span class="hljs-keyword">TABLE</span> [db.]name [<span class="hljs-keyword">ON</span> CLUSTER cluster] [<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">partition</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">PARTITION</span> ID <span class="hljs-string">&#x27;partition_id&#x27;</span>] [<span class="hljs-keyword">FINAL</span>] [DEDUPLICATE [<span class="hljs-keyword">BY</span> expression]]<br></code></pre></td></tr></table></figure>
+
+<h4 id="通过Group-by去重"><a href="#通过Group-by去重" class="headerlink" title="通过Group by去重"></a>通过Group by去重</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 执行去重的查询</span><br><span class="hljs-keyword">SELECT</span><br> user_id ,<br> argMax(score, create_time) <span class="hljs-keyword">AS</span> score, <br> argMax(deleted, create_time) <span class="hljs-keyword">AS</span> deleted,<br> <span class="hljs-built_in">max</span>(create_time) <span class="hljs-keyword">AS</span> ctime <br><span class="hljs-keyword">FROM</span> test_a <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> user_id<br><span class="hljs-keyword">HAVING</span> deleted <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">-- 创建视图，方便测试</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> view_test_a <span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span><br> user_id ,<br> argMax(score, create_time) <span class="hljs-keyword">AS</span> score, <br> argMax(deleted, create_time) <span class="hljs-keyword">AS</span> deleted,<br> <span class="hljs-built_in">max</span>(create_time) <span class="hljs-keyword">AS</span> ctime <br><span class="hljs-keyword">FROM</span> test_a <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> user_id<br><span class="hljs-keyword">HAVING</span> deleted <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">-- 插入重复数据，再次查询</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> test_a(user_id,score,create_time)<br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">0</span>,<span class="hljs-string">&#x27;AAAA&#x27;</span>,now());<br><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> view_test_a<br><span class="hljs-keyword">WHERE</span> user_id <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">-- 插入一条标记为删除的数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> test_a(user_id,score,deleted,create_time) <br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">0</span>,<span class="hljs-string">&#x27;AAAA&#x27;</span>,<span class="hljs-number">1</span>,now());<br><br><span class="hljs-comment">-- 再次查询，刚才插入的数据查询不到了</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> view_test_a<br><span class="hljs-keyword">WHERE</span> user_id <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<p>函数说明：</p>
+<ul>
+<li><p><strong>argMax(field1，field2)</strong>:按照 field2 的最大值取 field1 的值。</p>
+<p>当我们更新数据时，会写入一行新的数据，例如上面语句中，通过查询最大的 create_time 得到修改后的 score 字段值。</p>
+</li>
+</ul>
+<p><code>Notes：这行数据并没有被真正的删除，而是被过滤掉了。在一些合适的场景下，可以结合 表 级别的 TTL 最终将物理数据删除。</code></p>
+<h4 id="通过FINAL查询"><a href="#通过FINAL查询" class="headerlink" title="通过FINAL查询"></a>通过FINAL查询</h4><p>在查询语句后增加 FINAL 修饰符，这样在查询的过程中将会执行 Merge 的特殊逻辑（例如数据去重，预聚合等）。</p>
+<p>但是这种方法在早期版本基本没有人使用，因为在增加 FINAL 之后，我们的查询将会变成一个单线程的执行过程，查询速度非常慢。</p>
+<p>在 <strong>v20.5.2.7-stable</strong> 版本中，FINAL 查询支持多线程执行，并且可以通过 <strong>max_final_threads</strong>  </p>
+<p>参数控制单个查询的线程数。但是目前<strong>读取 part 部分的动作依然是串行的</strong>。</p>
+<p>FINAL 查询最终的性能和很多因素相关，列字段的大小、分区的数量等等都会影响到最终的查询时间，所以还要结合实际场景取舍。 </p>
+<h5 id="老版本-20-4-5-36（未测试）"><a href="#老版本-20-4-5-36（未测试）" class="headerlink" title="老版本 20.4.5.36（未测试）"></a>老版本 20.4.5.36（未测试）</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 普通查询</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> visits_v1 <span class="hljs-keyword">WHERE</span> StartDate <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;2014-03-17&#x27;</span> limit <span class="hljs-number">100</span>;<br><br><span class="hljs-comment">-- FINAL查询</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> visits_v1 <span class="hljs-keyword">FINAL</span> <span class="hljs-keyword">WHERE</span> StartDate <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;2014-03-17&#x27;</span> limit <span class="hljs-number">100</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="新版本-21-7-3-14"><a href="#新版本-21-7-3-14" class="headerlink" title="新版本 21.7.3.14"></a>新版本 21.7.3.14</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 普通查询</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> test_a<br><span class="hljs-keyword">WHERE</span> create_time <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1970-01-01 08:00:00&#x27;</span><br>LIMIT <span class="hljs-number">100</span><br>SETTINGS max_threads <span class="hljs-operator">=</span> <span class="hljs-number">4</span><br><br><span class="hljs-comment">-- 耗时 0.007 sec</span><br><span class="hljs-number">100</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">0.007</span> sec. Processed <span class="hljs-number">720.74</span> thousand <span class="hljs-keyword">rows</span>, <span class="hljs-number">7.08</span> MB (<span class="hljs-number">106.42</span> million <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">1.05</span> GB<span class="hljs-operator">/</span>s.)<br><br><span class="hljs-comment">-- 使用FINAL字段</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br><span class="hljs-keyword">FROM</span> test_a<br><span class="hljs-keyword">FINAL</span><br><span class="hljs-keyword">WHERE</span> create_time <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1970-01-01 08:00:00&#x27;</span><br>LIMIT <span class="hljs-number">100</span><br>SETTINGS max_threads <span class="hljs-operator">=</span> <span class="hljs-number">4</span><br><br><span class="hljs-comment">-- 耗时 0.049 sec</span><br><span class="hljs-number">100</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">in</span> set. Elapsed: <span class="hljs-number">0.049</span> sec. Processed <span class="hljs-number">1.24</span> million <span class="hljs-keyword">rows</span>, <span class="hljs-number">28.95</span> MB (<span class="hljs-number">25.33</span> million <span class="hljs-keyword">rows</span><span class="hljs-operator">/</span>s., <span class="hljs-number">592.84</span> MB<span class="hljs-operator">/</span>s.)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 普通查询</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">count</span>()<br><span class="hljs-keyword">FROM</span> test_a;<br><br>┌──<span class="hljs-built_in">count</span>()─┐<br>│ <span class="hljs-number">10500002</span>   │<br>└───────┘<br><br><span class="hljs-comment">-- 使用final进行后，根据排序字段去重了</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">count</span>()<br><span class="hljs-keyword">FROM</span><br>(<br>    <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span><br>    <span class="hljs-keyword">FROM</span> test_a<br>    <span class="hljs-keyword">FINAL</span><br>);<br><br>┌──<span class="hljs-built_in">count</span>()─┐<br>│ <span class="hljs-number">10000000</span>   │<br>└───────┘<br></code></pre></td></tr></table></figure>
+
+<h2 id="物化视图"><a href="#物化视图" class="headerlink" title="物化视图"></a>物化视图</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>ClickHouse 的物化视图是一种<strong>查询结果的持久化</strong>，它确实是给我们带来了查询效率的提升。用户查起来跟表没有区别，它就是一张表，它也像是一张时刻在预计算的表，创建的过程它是用了一个特殊引擎。</p>
+<h3 id="物化视图和普通视图的区别"><a href="#物化视图和普通视图的区别" class="headerlink" title="物化视图和普通视图的区别"></a>物化视图和普通视图的区别</h3><p>**<code>普通视图不保存数据，保存的仅仅是查询语句</code><strong>，查询的时候还是从原表读取数据，可以 将普通视图理解为是个子查询。</strong><code>物化视图则是把查询的结果根据相应的引擎存入到了磁盘或内存中</code>**，对数据重新进行了组织，你可以理解物化视图是完全的一张新表。</p>
+<ul>
+<li>优点：查询速度<code>快</code>，要是把物化视图这些规则全部写好，它比原数据查询快了很多，总的行数少了，因为都预计算好了。</li>
+<li>缺点：它的本质是一个流式数据的使用场景，是累加式的技术，所以要用历史数据做去重、去核这样的分析，在物化视图里面是不太好用的。在某些场景的使用也是有限的。而且如果一张表加了好多物化视图，在写这张表的时候，就会消耗很多机器的资源，比如数据带宽占满、存储一下子增加了很多。</li>
+</ul>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建物化视图语法</span><br><span class="hljs-keyword">CREATE</span> [MATERIALIZED] <span class="hljs-keyword">VIEW</span> [IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>] [db.]table_name [<span class="hljs-keyword">TO</span>[db.]name] <br>[ENGINE <span class="hljs-operator">=</span> engine] [POPULATE] <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> ...<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>生产环境不建议添加<code>POPULATE</code>参数，它会将历史数据也放入视图中，造成表在计算历史数据时的不可用，如果一定要历史数据可单独计算后，使用<code>Insert语句插入到视图</code></li>
+</ul>
+<h3 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建测试表</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> trips_test<br>(<br>    `trip_id` UInt32,<br>    `pickup_date` <span class="hljs-type">Date</span>,<br>    `pickup_datetime` DateTime,<br>    `pickup_cdeligibil` String,<br>    `tip_amount` Float32 <br>)<br>ENGINE <span class="hljs-operator">=</span> MergeTree<br><span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> toYYYYMM(pickup_date)<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pickup_datetime<br>SETTINGS index_granularity <span class="hljs-operator">=</span> <span class="hljs-number">8192</span><br><br><span class="hljs-comment">-- 导入测试数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_test <span class="hljs-keyword">SELECT</span><br>    trip_id,<br>    pickup_date,<br>    pickup_datetime,<br>    pickup_cdeligibil,<br>    tip_amount<br><span class="hljs-keyword">FROM</span> trips;<br><br><span class="hljs-comment">-- 创建物化视图</span><br><span class="hljs-keyword">CREATE</span> MATERIALIZED <span class="hljs-keyword">VIEW</span> trips_test_mv<br>ENGINE<span class="hljs-operator">=</span>SummingMergeTree<br><span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> toYYYYMM(pickup_date) <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pickup_date <br><span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span><br>trip_id,<br>pickup_date,<br><span class="hljs-built_in">sum</span>(tip_amount) <span class="hljs-keyword">AS</span> tip_amount_sum<br><span class="hljs-keyword">FROM</span> trips_test<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> trip_id,pickup_date;<br><br><span class="hljs-comment">-- 或者可以用下列语法，表A 可以是一张 mergetree 表</span><br><span class="hljs-comment">-- 如果不指定表A，物化视图的表名称为：.inner_id.表B_id</span><br><span class="hljs-comment">-- 如此格式：.inner_id.bb9b7351-2645-4f9e-bb9b-73512645af9e</span><br><span class="hljs-comment">-- 语法存在问题</span><br><span class="hljs-keyword">CREATE</span> MATERIALIZED <span class="hljs-keyword">VIEW</span> 物化视图名 <span class="hljs-keyword">TO</span> 表A<br><span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">FROM</span> 表B; <br><br><span class="hljs-comment">-- 不建议添加 populate 关键字进行全量更新,最好使用插入语句计算历史数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> trips_test_mv <span class="hljs-keyword">SELECT</span><br>    trip_id,<br>    pickup_date,<br>    <span class="hljs-built_in">sum</span>(tip_amount) <span class="hljs-keyword">AS</span> tip_amount_sum<br><span class="hljs-keyword">FROM</span> trips_test<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span><br>    trip_id,<br>    pickup_date;<br></code></pre></td></tr></table></figure>
+
+<h2 id="MetarializeMySQL引擎"><a href="#MetarializeMySQL引擎" class="headerlink" title="MetarializeMySQL引擎"></a>MetarializeMySQL引擎</h2><p>MySQL 的用户群体很大，为了能够增强数据的实时性，很多解决方案会利用 binlog 将数据写入到 ClickHouse。为了能够监听 binlog 事件，我们需要用到类似 canal 这样的第三方中间件，这无疑增加了系统的复杂度。</p>
+<p><code>ClickHouse 20.8.2.3 版本</code>新增加了 MaterializeMySQL 的 database 引擎，该 database 能映 射 到 MySQL 中 的 某 个 database ， 并 自 动 在 ClickHouse 中 创建对应的ReplacingMergeTree。ClickHouse 服务做为 MySQL 副本，读取Binlog 并执行 DDL 和 DML 请求，实现了基于 MySQL Binlog 机制的业务数据库实时同步功能。</p>
+<p><strong><code>Notes：物化MySqL的前提是：数据库里的表都是有主键的！！！</code></strong></p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li><p>MaterializeMySQL 同时支持<code>全量和增量</code>同步，在 database 创建之初会全量同步MySQL 中的表和数据，之后则会通过 binlog 进行增量同步。</p>
+</li>
+<li><p>MaterializeMySQL database 为其所创建的每张 ReplacingMergeTree 自动增加了_sign 和 _version 字段。其中，_version 用作 ReplacingMergeTree 的 ver 版本参数，每当监听到 insert、update 和 delete 事件时，在 databse 内全局自增。而 _sign 则用于标记是否被删除，取值 1 或者 -1。</p>
+<p>目前 MaterializeMySQL 支持如下几种 binlog 事件:</p>
+<ul>
+<li>MYSQL_WRITE_ROWS_EVENT: _sign &#x3D; 1，_version ++</li>
+<li>MYSQL_DELETE_ROWS_EVENT: _sign &#x3D; -1，_version ++</li>
+<li>MYSQL_UPDATE_ROWS_EVENT: 新数据 _sign &#x3D; 1</li>
+<li>MYSQL_QUERY_EVENT: 支持 CREATE TABLE 、DROP TABLE 、RENAME TABLE 等。</li>
+</ul>
+</li>
+</ul>
+<p><strong>使用细则</strong> </p>
+<ul>
+<li><p>DDL查询</p>
+<p>MySQL DDL 查询被转换成相应的 ClickHouse DDL 查询（ALTER, CREATE, DROP, RENAME）。如果 ClickHouse 不能解析某些 DDL 查询，该查询将被忽略。</p>
+</li>
+<li><p>数据复制</p>
+<p>MaterializeMySQL 不支持直接插入、删除和更新查询，而是将 DDL 语句进行相应转换： </p>
+<ul>
+<li>MySQL INSERT 查询被转换为 INSERT with _sign&#x3D;1</li>
+<li>MySQL DELETE 查询被转换为 INSERT with _sign&#x3D;-1</li>
+<li>MySQL UPDATE 查询被转换成 INSERT with _sign&#x3D;1 和 INSERT with _sign&#x3D;-1</li>
+</ul>
+</li>
+<li><p>select查询</p>
+<p>如果在 SELECT 查询中没有指定_version，则使用 FINAL 修饰符，返回_version 的最大值对应的数据，即最新版本的数据。</p>
+<p>如果在 SELECT 查询中没有指定_sign，则默认使用 WHERE _sign&#x3D;1，即返回未删除状态 (_sign&#x3D;1)的数据。</p>
+</li>
+<li><p>索引转换</p>
+<p>ClickHouse 数据库表会自动将 MySQL 主键和索引子句转换为 ORDER BY 元组。</p>
+<p>ClickHouse 只有一个物理顺序，由 ORDER BY 子句决定。如果需要创建新的物理顺序，请使用物化视图</p>
+</li>
+</ul>
+<h3 id="案例实操"><a href="#案例实操" class="headerlink" title="案例实操"></a>案例实操</h3><ol>
+<li><p>修改Mysql配置</p>
+<ol>
+<li><p>确保 MySQL 开启了 <code>binlog 功能</code>，且格式为 <code>ROW</code> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/my.cnf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加内容</span><br>server-id=1 <br>log-bin=mysql-bin<br>binlog_format=ROW<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>开启 <code>GTID 模式</code></p>
+<p>如果如果 <code>clickhouse 使用的是 20.8 prestable 之后发布的版本</code>，那么 MySQL 还需要配置开启 GTID 模式, 这种方式在 mysql 主从模式下可以确保数据同步的一致性(主从切换时)。 </p>
+<p><code>GTID是MySQL复制增强版</code>，从<code>MySQL 5.6版</code>本开始支持，目前已经是MySQL主流复制模式。它为每个 event分配一个全局唯一ID和序号，我们可以不用关心MySQL集群主从拓扑结构，直接告知MySQL这个GTID即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/my.cnf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加内容</span><br>gtid-mode=on<br>enforce-gtid-consistency=1 # 设置为主从强一致性<br>log-slave-updates=1 # 记录日志<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置完成重启mysql即可</p>
+</li>
+</ol>
+</li>
+<li><p>准备Mysql表和数据</p>
+<ol>
+<li><p>在 MySQL 中创建数据表并写入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建数据库</span><br><span class="hljs-keyword">CREATE</span> DATABASE testck;<br><br><span class="hljs-comment">-- 创建表</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `testck`.`t_organization` (<br> `id` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br> `code` <span class="hljs-type">int</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br> `name` text <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br> `updatetime` datetime <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br> <span class="hljs-keyword">PRIMARY</span> KEY (`id`),<br> <span class="hljs-keyword">UNIQUE</span> KEY (`code`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB;<br><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `testck`.`t_user` ( <br> `id` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br> `code` <span class="hljs-type">int</span>,<br> <span class="hljs-keyword">PRIMARY</span> KEY (`id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB;<br><br><br><span class="hljs-comment">-- 插入数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testck.t_organization (code, name,updatetime) <br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1000</span>,<span class="hljs-string">&#x27;Realinsight&#x27;</span>,NOW());<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testck.t_organization (code, name,updatetime) <br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1001</span>, <span class="hljs-string">&#x27;Realindex&#x27;</span>,NOW());<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testck.t_organization (code, name,updatetime) <br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1002</span>,<span class="hljs-string">&#x27;EDT&#x27;</span>,NOW());<br><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testck.t_user (code) <span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>准备就绪后</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- clickhouse开启allow_experimental_database_materialize_mysql参数</span><br><span class="hljs-keyword">set</span> allow_experimental_database_materialize_mysql<span class="hljs-operator">=</span><span class="hljs-number">1</span>;<br><br><span class="hljs-comment">-- 创建mysql通道，若有多个数据库可用[&#x27;database1&#x27;,&#x27;database2&#x27;]进行配置</span><br><span class="hljs-keyword">CREATE</span> DATABASE test_binlog ENGINE <span class="hljs-operator">=</span> <br>MaterializeMySQL(<span class="hljs-string">&#x27;ip:3306&#x27;</span>,<span class="hljs-string">&#x27;database&#x27;</span>,<span class="hljs-string">&#x27;username&#x27;</span>,<span class="hljs-string">&#x27;password&#x27;</span>);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="常见问题可参考阿里平台"><a href="#常见问题可参考阿里平台" class="headerlink" title="常见问题可参考阿里平台"></a>常见问题可参考阿里平台</h2><p><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/162815.html?spm=a2c4g.11186623.6.652.312e79bd17U8IO">阿里平台常见问题及解决方案</a></p>
+<h1 id="Clikhouse监控"><a href="#Clikhouse监控" class="headerlink" title="Clikhouse监控"></a>Clikhouse监控</h1><p>使用Prometheus+Grafana的组合进行监控备份是比较流行的，而且简单易上手，可以集成很多框架，包括服务器的负载，其中<code>Prometheus负责收集各类系统的运行指标，Grafana负责可视化展示的部分</code></p>
+<p>ClickHouse 从 <code>v20.1.2.4</code> 开始，内置了对接 Prometheus 的功能，配置的方式也很简单，可以将其作为 Prometheus 的 Endpoint 服务，从而自动的将 metrics 、 events 和 asynchronous_metrics 三张系统的表的数据发送给 Prometheus。 </p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a target="_blank" rel="noopener" href="https://prometheus.io/download/">Prometheus下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://grafana.com/grafana/download">Grafana下载</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-配置Prometheus"><a href="#安装-配置Prometheus" class="headerlink" title="安装&amp;配置Prometheus"></a>安装&amp;配置Prometheus</h3><ul>
+<li><p>解压Prometheus</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -zxvf prometheus-2.34.0.linux-amd64.tar.gz -C /opt/<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件，注意缩进问题 prometheus.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment">#添加 ClickHouse 监控配置</span><br><span class="hljs-comment"># 名称可以随便取</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">job_name:</span> <span class="hljs-string">clickhouse-1</span><br>    <span class="hljs-attr">static_configs:</span><br>    	<span class="hljs-comment"># 如果有多个[&#x27;localhost01:9363&#x27;,&#x27;localhost02:9363&#x27;]</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">targets:</span> [<span class="hljs-string">&#x27;localhost:9363&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>global</strong> <strong>配置块：</strong>控制 Prometheus 服务器的全局配置<ul>
+<li>scrape_interval：配置拉取数据的时间间隔，默认为 1 分钟。 </li>
+<li>evaluation_interval：规则验证（生成 alert）的时间间隔，默认为 1 分钟。</li>
+</ul>
+</li>
+<li><strong>rule_files</strong> <strong>配置块：</strong>规则配置文件</li>
+<li><strong>scrape_configs</strong> <strong>配置块：</strong>配置采集目标相关， prometheus 监视的目标。Prometheus 自身的运行信息可以通过 HTTP 访问，所以 Prometheus 可以监控自己的运行数据。 <ul>
+<li>job_name：监控作业的名称 </li>
+<li>static_configs：表示静态目标配置，就是固定从某个 target 拉取数据 </li>
+<li>targets ： 指 定 监 控 的 目 标 ， 其 实 就 是 从 哪 儿 拉 取 数 据 。 Prometheus 会 从 <a target="_blank" rel="noopener" href="http://localhost:9090/metrics">http://localhost:9090/metrics</a> 上拉取数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="启动Prometheus"><a href="#启动Prometheus" class="headerlink" title="启动Prometheus"></a>启动Prometheus</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Prometheus 是可以在运行时自动加载配置的。启动时需要添加：--web.enable-lifecycle</span><br><br>nohup ./prometheus --config.file=prometheus.yml &gt; ./prometheus.log 2&gt;&amp;1 &amp;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">访问地址</span><br>http://localhost:9090<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装-启动Grafana"><a href="#安装-启动Grafana" class="headerlink" title="安装&amp;启动Grafana"></a>安装&amp;启动Grafana</h3><p><a target="_blank" rel="noopener" href="https://grafana.com/grafana/dashboards">监控数据模板下载</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载Grafana</span><br>wget https://dl.grafana.com/enterprise/release/grafana-enterprise-8.4.6.linux-amd64.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压</span><br>tar -zxvf grafana-enterprise-8.4.6.linux-amd64.tar.gz -C /opt<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动</span><br>nohup ./bin/grafana-server web &gt; ./grafana.log 2&gt;&amp;1 &amp;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">web页面，默认用户名密码：admin</span><br>http://localhost:3000<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置Clickhouse"><a href="#配置Clickhouse" class="headerlink" title="配置Clickhouse"></a>配置Clickhouse</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 打开默认配置，重启CK即可 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">prometheus</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">endpoint</span>&gt;</span>/metrics<span class="hljs-tag">&lt;/<span class="hljs-name">endpoint</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>9363<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">metrics</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">metrics</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">events</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">events</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">asynchronous_metrics</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">asynchronous_metrics</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">status_info</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">status_info</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">prometheus</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="Clikchouse备份"><a href="#Clikchouse备份" class="headerlink" title="Clikchouse备份"></a>Clikchouse备份</h1><ul>
+<li>手动备份及回复</li>
+<li>第三方工具：<a target="_blank" rel="noopener" href="https://github.com/AlexAkulov/clickhouse-backup">clickhouse-backup</a></li>
+</ul>
+<h2 id="相关参考文档"><a href="#相关参考文档" class="headerlink" title="相关参考文档"></a>相关参考文档</h2><p> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ya-qiang/p/13566111.html">https://www.cnblogs.com/ya-qiang/p/13566111.html</a> </p>
+<p> <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1602662">https://cloud.tencent.com/developer/article/1602662</a> </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/DBArtist/p/13603198.html">https://www.cnblogs.com/DBArtist/p/13603198.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6897042422761521159">https://juejin.cn/post/6897042422761521159</a></p>
+<p><a target="_blank" rel="noopener" href="https://jiamaoxiang.top/2020/11/17/%E7%AC%AC%E4%BA%94%E7%AF%87-ClickHouse%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5-Flink%E3%80%81Spark%E3%80%81Kafka%E3%80%81MySQL/">https://jiamaoxiang.top/2020/11/17/%E7%AC%AC%E4%BA%94%E7%AF%87-ClickHouse%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5-Flink%E3%80%81Spark%E3%80%81Kafka%E3%80%81MySQL/</a></p>
+<p> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/laoqing/p/15112701.html">https://www.cnblogs.com/laoqing/p/15112701.html</a> ?</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/BigData/" class="print-no-link">#BigData</a>
+      
+        <a href="/tags/Database/" class="print-no-link">#Database</a>
+      
+        <a href="/tags/Clickhouse/" class="print-no-link">#Clickhouse</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Clickhouse</div>
+      <div>https://yuecang.github.io/2023/12/22/Clickhouse/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Leo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/12/22/Elasticsearch/" title="Elasticsearch">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Elasticsearch</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/22/xsync/" title="xsync">
+                        <span class="hidden-mobile">xsync</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
