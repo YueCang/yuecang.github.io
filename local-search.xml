@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>xsync</title>
+    <link href="/2023/12/22/xsync/"/>
+    <url>/2023/12/22/xsync/</url>
+    
+    <content type="html"><![CDATA[<h3 id="使用前提："><a href="#使用前提：" class="headerlink" title="使用前提："></a>使用前提：</h3><ul><li><p><strong>需要安装rsync</strong></p><ul><li><pre><code class="shell">yum -y install rsync xinetd<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>- **需要配置SSH免密登录**<br>- **需要配置环境环境变量**<br>- **需要修改第二步中的集群名称**<br><br>~~~shell<br>#!/bin/bash<br>#<span class="hljs-number">1.</span> 判断参数个数<br><span class="hljs-keyword">if</span> [ $# -lt <span class="hljs-number">1</span> ]<br>then<br>  echo Not Enough Arguement!<br>  exit;<br>fi<br>##################### 记得修改需要遍历所有机器节点 ########################<br>#<span class="hljs-number">2.</span> 遍历集群所有机器<br>for host <span class="hljs-keyword">in</span> hadoop01 hadoop02<br>do<br>  echo ====================  $host  ====================<br>  #<span class="hljs-number">3.</span> 遍历所有目录，挨个发送<br>  for file <span class="hljs-keyword">in</span> $@<br>  do<br>    #<span class="hljs-number">4</span> 判断文件是否存在<br>    <span class="hljs-keyword">if</span> [ -e $file ]<br>    then<br>      #<span class="hljs-number">5.</span> 获取父目录<br>      pdir=$(cd -P $(dirname $file); pwd)<br>      #<span class="hljs-number">6.</span> 获取当前文件的名称<br>      fname=$(basename $file)<br>      #<span class="hljs-number">7.</span> 可以针对ssh端口进行修改，如果默认是<span class="hljs-number">22</span>端口则不需要填写<br>      ssh $host -p <span class="hljs-number">8022</span> <span class="hljs-string">&quot;mkdir -p $pdir&quot;</span><br>      rsync -e <span class="hljs-string">&#x27;ssh -p8022&#x27;</span> -av $pdir/$fname $host:$pdir<br>    else<br>      echo $file does not exists!<br>    fi<br>  done<br>done<br></code></pre></td></tr></table></figure></code></pre></li></ul></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Shell</tag>
+      
+      <tag>xsync</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Zookeeper</title>
     <link href="/2023/12/22/Zookeeper/"/>
     <url>/2023/12/22/Zookeeper/</url>
